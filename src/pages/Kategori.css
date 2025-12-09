@@ -1,0 +1,330 @@
+/* src/pages/Kategori.css */
+
+.kategori-page {
+    padding: 30px 7%;
+    background-color: #F9F1E5; 
+    min-height: 90vh; 
+}
+
+/* --- Area Pencarian --- */
+.search-input-area {
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 40px; 
+}
+.cari {
+    display: flex;
+    align-items: center;
+    background: #ffe8d1;
+    padding: 10px 20px;
+    border-radius: 25px;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #DB944B;
+}
+.cari input {
+    padding: 6px 10px;
+    background: #ffe8d1;
+    border: transparent;
+    outline: 0;
+    color : #DB944B;
+    font-size: 18px;
+    flex: 1;
+}
+.cari img {
+    width: 25px;
+    margin-left: 10px;
+    filter: invert(1);
+    cursor: pointer;
+}
+
+/* --- Filter Container --- */
+.filter-container {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #FFE08D30; 
+    border-radius: 10px;
+}
+.filter-title {
+    color: #DB944B;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px; 
+    justify-content: center;
+}
+.filter-button {
+    background: #ffe8d1; 
+    color: #DB944B;
+    border: 2px solid #DB944B;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap; 
+}
+.filter-button:hover {
+    background: #DB944B;
+    color: white;
+}
+.filter-button.active {
+    background: #DB944B;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Garis pemisah */
+.separator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(219, 148, 75, 0), rgba(219, 148, 75, 0.75), rgba(219, 148, 75, 0));
+    margin: 40px 0;
+}
+
+/* --- Daftar Resep (GRID LAYOUT) --- */
+.resep-list {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    padding: 0 10px;
+}
+.list-header {
+    grid-column: 1 / -1; 
+    color: #DB944B;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Card Link Wrapper */
+.resep-card-link {
+    text-decoration: none; /* Hilangkan garis bawah dari Link */
+    color: inherit;
+}
+
+/* --- Kartu Resep dan Gambar --- */
+.resep-card {
+    background: white;
+    border: 1px solid #FFE08D;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    color: #DB944B;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease-in-out;
+    height: 100%; /* Penting untuk grid */
+}
+.resep-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+.resep-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #FFE08D;
+}
+.resep-card-info {
+    padding: 15px;
+    text-align: left;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.resep-card-title {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #DB944B;
+}
+
+/* --- Style RATING --- */
+.rating-stars {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: gold; 
+}
+
+.rating-value {
+    font-size: 0.8em;
+    color: #666; 
+    margin-left: 5px;
+    font-weight: normal;
+}
+
+.resep-card-category {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 10px;
+}
+
+.no-result {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #DB944B;
+    font-size: 1.2em;
+    padding: 30px;
+}
+
+/* --- Responsivitas Mobile --- */
+@media (max-width: 600px) {
+    .kategori-page {
+        padding: 20px 5%;
+    }
+    .filter-buttons {
+        justify-content: flex-start;
+        gap: 10px;
+    }
+    .filter-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .resep-list {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* Kategori.css - Tambahkan styles ini */
+
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 8px 0;
+}
+
+.rating-display .stars {
+  color: #ffc107;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.rating-display .rating-value {
+  color: #666;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.rating-display .rating-count {
+  color: #888;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.no-rating {
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.recipe-rating-container {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.recipe-count {
+  color: #DB944B;
+  font-size: 16px;
+  margin-left: 10px;
+  font-weight: normal;
+}
+
+/* Grid layout untuk card */
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.resep-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resep-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.resep-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-recipe-btn {
+  margin-top: auto;
+  background: #DB944B;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.view-recipe-btn:hover {
+  background: #c87c2a;
+}
+
+/* No result styles */
+.no-result {
+  text-align: center;
+  padding: 40px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.no-result-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.no-result h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.no-result p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.no-result-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.clear-filters-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-recipe-link {
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}

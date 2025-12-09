@@ -1,0 +1,111 @@
+/* src/pages/Favorite.css */
+
+.favorite-page {
+    padding: 30px 7%;
+    background-color: #F9F1E5; 
+    min-height: 90vh; 
+}
+
+.page-title {
+    color: #DB944B;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+}
+
+/* Loading Spinner */
+.loading-container {
+    text-align: center;
+    padding: 100px;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #DB944B;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Grid untuk daftar favorit */
+.resep-list-favorite {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    padding: 0 10px;
+}
+
+/* Style saat tidak ada favorit */
+.no-favorites {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.no-favorites-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+}
+
+.no-favorites h3 {
+    color: #DB944B;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.no-favorites p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+.no-favorites a {
+    color: #DB944B;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.no-favorites a:hover {
+    color: #A36F35;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .favorite-page {
+        padding: 20px 5%;
+    }
+    
+    .page-title {
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+    
+    .resep-list-favorite {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.6em;
+    }
+    
+    .resep-list-favorite {
+        grid-template-columns: 1fr;
+    }
+}

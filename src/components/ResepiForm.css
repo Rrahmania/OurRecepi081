@@ -1,0 +1,269 @@
+.recipe-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+  
+  .recipe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group textarea {
+    padding: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input[type="text"]:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #FF8100;
+  }
+  
+  .dynamic-field {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .dynamic-field input,
+  .dynamic-field textarea {
+    flex: 1;
+  }
+  
+  .remove-btn {
+    background: #cf8b3d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .remove-btn:hover {
+    background: #cf8b3d;
+  }
+  
+  .add-btn {
+    background: #FF8100;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+    align-self: flex-start;
+  }
+  
+  .add-btn:hover {
+    background: #FF8100;
+  }
+  
+  .image-upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .file-input {
+    padding: 10px;
+    border: 2px dashed #e1e1e1;
+    border-radius: 6px;
+    background: #f9f9f9;
+  }
+  
+  .image-preview {
+    position: relative;
+    max-width: 300px;
+  }
+  
+  .image-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .remove-image-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s ease;
+  }
+  
+  .remove-image-btn:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  .submit-btn {
+    background: #FF8100;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .submit-btn:hover {
+    background: #e87400;
+  }
+  
+  /* Categories Styling */
+  .categories-container {
+    border: 2px solid #e1e1e1;
+    border-radius: 6px;
+    padding: 15px;
+    background: #f9f9f9;
+  }
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .category-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: white;
+    border: 2px solid #e1e1e1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+  }
+  
+  .category-checkbox:hover {
+    border-color: #FF8100;
+    background: #f0f9f0;
+  }
+  
+  .category-checkbox input[type="checkbox"] {
+    display: none;
+  }
+  
+  .checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .category-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+    background: #FF8100;
+    border-color: #FF8100;
+  }
+  
+  .category-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .category-checkbox input[type="checkbox"]:disabled + .checkbox-custom {
+    background: #f5f5f5;
+    border-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .category-checkbox:has(input[type="checkbox"]:disabled) {
+    background: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #ddd;
+  }
+  
+  .categories-selected {
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    border-left: 4px solid #FF8100;
+  }
+  
+  .categories-selected strong {
+    color: #333;
+  }
+  
+  .no-category {
+    color: #999;
+    font-style: italic;
+  }
+  
+  .categories-count {
+    float: right;
+    color: #FF8100;
+    font-weight: bold;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .recipe-form-container {
+      margin: 10px;
+      padding: 15px;
+    }
+    
+    .dynamic-field {
+      flex-direction: column;
+    }
+    
+    .remove-btn {
+      align-self: flex-end;
+    }
+  
+    .categories-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+    }
+    
+    .category-checkbox {
+      font-size: 12px;
+      padding: 6px 8px;
+    }
+  }

@@ -1,0 +1,271 @@
+/* ======================================= */
+/* 1. Styling Utama (Desktop)  */
+/* ======================================= */
+
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFE08D; /* Background Kuning Muda */
+    padding : 15px 7%;
+    position: sticky; 
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Container untuk Logo dan Tombol Masuk */
+.nav-left {
+    /* Style ini tidak dipakai di JSX Anda, tapi dipertahankan untuk referensi */
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.logo-link {
+    text-decoration: none;
+}
+
+.logo{
+    width: 150px;
+    cursor: pointer;
+}
+
+/* ======================================= */
+/* 2. Navigasi & List Menu     */
+/* ======================================= */
+
+ul {
+    list-style: none;
+    display: flex; /* Default desktop: flex row */
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+ul li{
+    margin: 0 18px; 
+    padding: 5px 0; 
+    /* Gunakan properti list-item untuk transisi */
+    font-size: 17px;
+    font-weight: 500;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+/* Style Link Default (non-tombol) */
+ul li a{
+    text-decoration: none;
+    color: #DB944B; 
+    transition: color 0.2s;
+}
+
+ul li:hover {
+    color: #DB944B;
+    border-bottom: 3px solid #DB944B; 
+}
+
+ul li a:hover {
+    color: #A36F35; 
+}
+
+
+/* ======================================= */
+/* 3. Styling Tombol (Desktop) */
+/* ======================================= */
+
+/* Base Style untuk semua Tombol di Navbar (Masuk/Tambah Resep/Logout) */
+.login-link, 
+.add-recipe-link,
+.logout-btn {
+    /* Reset gaya default <li> dan <a> */
+    text-decoration: none;
+    display: flex; 
+    align-items: center;
+    gap: 6px; /* Jarak antara ikon dan teks */
+    white-space: nowrap; 
+
+    /* Gaya Tombol */
+    color: white !important; 
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* --- Tombol Masuk/Login --- */
+.login-link {
+    background-color: #DB944B; /* Warna oranye terang */
+}
+
+.login-link:hover {
+    background-color: #A36F35; /* Warna hover lebih gelap */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Tombol Tambah Resep (Di dalam ul <li>) --- */
+.add-recipe-link {
+    background-color: #cf8b3d; /* Warna oranye agak gelap */
+}
+
+.add-recipe-link:hover {
+    background-color: #7E5F34;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Tombol Logout (Sebagai <button>) --- */
+.logout-btn {
+    background-color: #c93b3b; /* Warna merah/bahaya */
+    margin: 0; /* Pastikan margin <li> yang mengelilinginya mengatur jarak */
+}
+
+.logout-btn:hover {
+    background-color: #a02e2e; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Styling Icon + --- */
+.plus-icon {
+    font-size: 1.2em;
+    font-weight: 900;
+    line-height: 1;
+    color: white; /* Warna ikon disamakan dengan warna teks (putih) */
+}
+
+/* --- Username Display --- */
+.username {
+    color: #DB944B; /* Warna disamakan dengan link */
+    font-weight: bold;
+    /* Hilangkan efek hover default list item */
+    border-bottom: none !important;
+    cursor: default;
+}
+.username:hover {
+    border-bottom: none;
+}
+
+
+/* --- Menghilangkan efek border-bottom pada <li> yang berisi tombol --- */
+/* Selector :has() mungkin tidak didukung di semua browser lama. 
+   Alternatif: gunakan class khusus pada <li> */
+li:has(.login-link),
+li:has(.add-recipe-link),
+li:has(.logout-btn) {
+    border-bottom: none;
+}
+li:has(.login-link):hover,
+li:has(.add-recipe-link):hover,
+li:has(.logout-btn):hover {
+    border-bottom: none;
+}
+
+
+/* ======================================= */
+/* 4. Burger Menu (Mobile)     */
+/* ======================================= */
+
+.menu-icon {
+    display: none; 
+    cursor: pointer;
+    z-index: 1001; 
+    padding: 5px; 
+}
+
+.burger-img {
+    width: 30px;
+    height: 30px;
+    /* Invert warna untuk menyesuaikan dengan skema warna Anda */
+    filter: invert(40%) sepia(20%) saturate(600%) hue-rotate(340deg) brightness(80%); 
+}
+
+/* ======================================= */
+/* 5. MEDIA QUERY: Mobile/Tablet */
+/* ======================================= */
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 5%;
+    }
+
+    /* Tampilkan ikon burger/close */
+    .menu-icon {
+        display: block; 
+    }
+    
+    /* Sembunyikan menu di desktop, tampilkan hanya jika 'open' */
+    ul {
+        display: flex; 
+        position: fixed;
+        top: 0; 
+        right: -100%; 
+        width: 70%; 
+        height: 100vh; 
+        background: #F9F1E5; /* Warna latar belakang mobile */
+        flex-direction: column; 
+        justify-content: flex-start; 
+        padding-top: 100px; 
+        transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+        z-index: 999;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Saat menu memiliki class 'open', tampilkan di layar */
+    ul.open {
+        right: 0;
+    }
+
+    ul li {
+        display: block; 
+        width: 100%;
+        margin: 0;
+        padding: 15px 30px; 
+        border-bottom: 1px solid #DB944B1A; 
+    }
+    
+    /* Hapus hover effect border di mobile, ganti dengan background sederhana */
+    ul li:hover {
+        border-bottom: none;
+        background-color: #FFE08D30; 
+    }
+    
+    /* Reset Gaya Tombol di Mobile (Kembali ke tampilan link) */
+    .login-link, 
+    .add-recipe-link,
+    .logout-btn {
+        background-color: transparent;
+        color: #DB944B !important; /* Warna link mobile */
+        padding: 5px 0; /* Padding list item */
+        border-radius: 0;
+        box-shadow: none;
+        font-weight: bold;
+        /* Tambahkan display block agar mengisi seluruh lebar li */
+        display: block; 
+        width: 100%;
+        text-align: left;
+    }
+
+    .login-link:hover, 
+    .add-recipe-link:hover,
+    .logout-btn:hover {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    /* Set warna ikon kembali ke warna link mobile */
+    .add-recipe-link .plus-icon {
+        color: #DB944B; 
+    }
+    
+    /* Style Username Mobile */
+    .username {
+        color: #DB944B;
+        font-weight: bold;
+        /* Tambahkan background saat hover */
+    }
+    .username:hover {
+        background-color: #FFE08D30;
+    }
+}

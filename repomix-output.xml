@@ -1,0 +1,3949 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+eslint.config.js
+index.html
+package.json
+public/android-chrome-192x192.png
+public/android-chrome-512x512.png
+public/apple-touch-icon.png
+public/favicon-16x16.png
+public/favicon-32x32.png
+public/favicon.ico
+public/site.webmanifest
+public/vite.svg
+README.md
+src/App.css
+src/App.js
+src/App.jsx
+src/assets/Ayam.png
+src/assets/cari.png
+src/assets/Daging.png
+src/assets/hamburger.png
+src/assets/logo.png
+src/assets/Salad.png
+src/assets/Sayur.png
+src/assets/tutup.webp
+src/components/HeroCarousel.css
+src/components/HeroCarousel.jsx
+src/components/Navbar.css
+src/components/Navbar.jsx
+src/components/ProtectedRoute.jsx
+src/components/Recipecard.css
+src/components/RecipeCard.jsx
+src/components/ResepiForm.css
+src/components/ResepiForm.jsx
+src/components/ResepiList.css
+src/components/ResepiList.jsx
+src/context/AuthContext.jsx
+src/data/data.js
+src/data/resep.js
+src/hooks/useResep.js
+src/index.css
+src/index.js
+src/main.jsx
+src/pages/DetailResep.css
+src/pages/DetailResep.jsx
+src/pages/Favorite.css
+src/pages/Favorite.jsx
+src/pages/Home.css
+src/pages/Home.jsx
+src/pages/Kategori.css
+src/pages/Kategori.jsx
+src/pages/LoginRegister.css
+src/pages/LoginRegister.jsx
+src/services/authService.js
+src/services/recipeService.js
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="eslint.config.js">
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+])
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Our Receipe</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="package.json">
+{
+  "name": "justanomaly-lab",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.6",
+    "react-responsive-carousel": "^3.2.23",
+    "@heroicons/react": "^2.0.18"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "vite": "^7.2.4"
+  }
+}
+</file>
+
+<file path="public/site.webmanifest">
+{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
+</file>
+
+<file path="public/vite.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="31.88" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 257"><defs><linearGradient id="IconifyId1813088fe1fbc01fb466" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%"><stop offset="0%" stop-color="#41D1FF"></stop><stop offset="100%" stop-color="#BD34FE"></stop></linearGradient><linearGradient id="IconifyId1813088fe1fbc01fb467" x1="43.376%" x2="50.316%" y1="2.242%" y2="89.03%"><stop offset="0%" stop-color="#FFEA83"></stop><stop offset="8.333%" stop-color="#FFDD35"></stop><stop offset="100%" stop-color="#FFA800"></stop></linearGradient></defs><path fill="url(#IconifyId1813088fe1fbc01fb466)" d="M255.153 37.938L134.897 252.976c-2.483 4.44-8.862 4.466-11.382.048L.875 37.958c-2.746-4.814 1.371-10.646 6.827-9.67l120.385 21.517a6.537 6.537 0 0 0 2.322-.004l117.867-21.483c5.438-.991 9.574 4.796 6.877 9.62Z"></path><path fill="url(#IconifyId1813088fe1fbc01fb467)" d="M185.432.063L96.44 17.501a3.268 3.268 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028l72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113Z"></path></svg>
+</file>
+
+<file path="README.md">
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+</file>
+
+<file path="src/App.css">
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+</file>
+
+<file path="src/App.jsx">
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home.jsx';
+import Kategori from './pages/Kategori';
+import DetailResep from './pages/DetailResep'; 
+import Favorite from './pages/Favorite'; 
+import RecipeForm from './components/ResepiForm';
+import RecipeList from './components/ResepiList';
+import LoginRegister from './pages/LoginRegister'; // Komponen LoginRegister
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import { AuthProvider } from './context/AuthContext';
+
+// Placeholder yang tidak perlu diubah
+const HomePage = () => <div style={{padding: '50px', textAlign: 'center'}}>
+    <h1 style={{color: '#DB944B'}}>Selamat Datang di Resep App!</h1>
+    <p>Silakan jelajahi resep melalui menu Kategori.</p>
+</div>;
+
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        {/* NAVBAR DITEMPATKAN DI SINI */}
+        <Navbar /> 
+        
+        <main>
+          <Routes>
+            {/* Rute Umum (Tidak Perlu Login) */}
+            <Route path="/" element={<Home />} />
+            <Route path="/kategori" element={<Kategori />} /> 
+            <Route path="/resep/:id" element={<DetailResep />} /> 
+            <Route path="/daftar-resep" element={<RecipeList />} />
+            
+            {/* Rute Login/Register yang DITINGKATKAN */}
+            {/* Mengganti placeholder LoginPage dengan komponen LoginRegister yang sebenarnya */}
+            <Route path="/login" element={<LoginRegister />} />
+            
+            {/* ======================================== */}
+            {/* Rute yang DILINDUNGI (Protected Routes) */}
+            {/* ======================================== */}
+            
+            {/* 🔒 Melindungi Halaman Favorite */}
+            <Route 
+              path="/favorite" 
+              element={
+                <ProtectedRoute>
+                  <Favorite />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* 🔒 Melindungi Halaman Tambah Resep */}
+            <Route 
+              path="/tambah-resep" 
+              element={
+                <ProtectedRoute>
+                  {/* Menggunakan komponen RecipeForm yang sudah Anda impor */}
+                  <RecipeForm />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Route Fallback */}
+            <Route path="*" element={
+                <div style={{padding: '50px', textAlign: 'center'}}>
+                    <h1 style={{color: 'red'}}>404 - Halaman Tidak Ditemukan</h1>
+                </div>
+            } />
+          </Routes>
+        </main>
+        
+        {/* Anda bisa menambahkan Footer di sini */}
+      </Router>
+    </AuthProvider>
+  );
+}
+
+export default App;
+</file>
+
+<file path="src/components/HeroCarousel.css">
+/* src/components/HeroCarousel.css */
+
+.hero-carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* Sesuaikan lebar maksimal carousel */
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.7s ease-in-out; /* Transisi slide */
+}
+
+.carousel-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    position: relative;
+    height: 400px; /* Tinggi setiap slide */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Pastikan gambar mengisi seluruh slide */
+    filter: brightness(70%); /* Sedikit redupkan gambar agar teks lebih jelas */
+}
+
+.slide-content {
+    position: absolute;
+    z-index: 2;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.3); /* Background gelap transparan untuk teks */
+    border-radius: 8px;
+}
+
+.slide-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #FFD700; /* Kuning untuk judul */
+}
+
+.slide-content p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: white;
+}
+
+/* --- Navigasi (Panah) --- */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px 18px;
+    cursor: pointer;
+    font-size: 1.5em;
+    border-radius: 50%;
+    z-index: 3;
+    transition: background-color 0.3s;
+}
+
+.carousel-control:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control.prev {
+    left: 15px;
+}
+
+.carousel-control.next {
+    right: 15px;
+}
+
+/* --- Indikator Dot --- */
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.dot.active {
+    background-color: #FFD700; /* Kuning untuk dot aktif */
+    transform: scale(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-slide {
+        height: 300px;
+    }
+    .slide-content h2 {
+        font-size: 1.8em;
+    }
+    .slide-content p {
+        font-size: 1em;
+    }
+    .carousel-control {
+        padding: 10px 13px;
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-slide {
+        height: 250px;
+    }
+    .slide-content h2 {
+        font-size: 1.5em;
+    }
+    .slide-content p {
+        font-size: 0.9em;
+    }
+    .carousel-dots {
+        bottom: 10px;
+    }
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+}
+</file>
+
+<file path="src/components/HeroCarousel.jsx">
+// src/components/HeroCarousel.jsx
+import React, { useState, useEffect } from 'react';
+import './HeroCarousel.css';
+
+const HeroCarousel = () => {
+  // ✅ BENAR: Pakai URL gambar online
+  const slides = [
+    {
+      id: 1,
+      image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&h=400&fit=crop',
+      title: 'Salad Buah Segar',
+      description: 'Nikmati kesegaran buah-buahan pilihan untuk hari yang ceria.'
+    },
+    {
+      id: 2,
+      image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEhUSExMWFRUXFxUVFRcXGBgXFxUVFRUWFxUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0lICUtLS8vMi0tLS0uLS8uLS0vLS81LS0tLS0tLS0tLy0tLS0tLS0tLS0rLS0vLS0tLS0tL//AABEIAKgBLAMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAAAQIDBAUGBwj/xAA9EAABAgMFBgQFAwMDBAMAAAABAAIDESEEEjFRYQVBcZGh8AYTIoEyUrHB0UJi4RRy8QcjkoKissIzNEP/xAAaAQACAwEBAAAAAAAAAAAAAAAAAQIDBAUG/8QALREAAgIBBAEBBwQDAQAAAAAAAAECEQMEEiExQVETFDJhcaGxIpHR8COB4QX/2gAMAwEAAhEDEQA/APWJFLdReReWI0hdSXQi8gv1RYBcTSOCQ8SgAZJWFC3EBiJomixi3El1E0AosQAJUhKWaBghF5E0ABKQhKZZJs9EWAXUXEXks0gELEl0p00k0ANulLdOqJovIALpShqA5KiwEupLpTi5F7uqYCXTkiRySkpJ6JWAkjl1Sd91TpnJJXJACS77KLqWqASgBLqLiCTki8e/8IsKC4kuJbyQlKwC4luJpPBJNFjosSRIZpgelmnYqHSSJpckL0rQ6HSQmX0XkWFDjJEwmlybeKVhRJRCZeKLyLCh4TpqMPKUOTTAeEo7xUDo4GqrRbfLAJ9CNHvemvl2VnNtZzUcSJPei0FM0DFGYSf1Dc1jvTDEUN6JbTb/AKluaTz26LF8xObES3oNps+aMwnB88ljtepWRCpbkFGtPuSUOVGHFVlrp71NK+iDZIX6pQdU1rEOKGmux2mOe7VMv6oLZqNwUGxoknqkmM02SaR3NKx0Opmloou8UA6dSlYUS07CSijJOXVJe06osKJkihL9El/RFjosT77KSevT+VB5ndUeYEWFF0kaJJhJPvspJ6981KyI68EhcEwu1SE69P4SsB94IvBMPHoEXhn9EWMdfHckXwmz1Se56fhFgOLwkvhNdoTPvRRvcBqVOMG+SLY98XKihc9RPiqIxZ8VNtIVNkkXqqhdVSRo4A1y3qk0nFYc2phF0XwxtouF0gq8WPSYkdJ1AzknQgTTFVLVZSDeYajdnwWLLrG+Fx+Sbx0iVttaRJIYo3LLtTXA+YPh3j+FrbFhB7HRjgKAHCeZG/gorNmlLbx9fkOGxrnsZEjTrI8knnAZj2TXWwAlzySJHDPcqezrV573Mvht0XnF2EhKchpMJLNlfXf0/wCl6w2m64RottIzViFGCbC2XEP6m3dxNJ+yjtdk8upk4YTCuWTOlua4/b+Slxg3SZdEVWbPHXPttEsHH6qzAtpGInwoVZj11fEmvv8A39it4k+mdJDjzUxAdisKz2oOwMjkaFX4UcjFdDFqIzVp2Z542i06EdxUJGf0U7Iqc8Aq1wT6IqTXZV9ykdxPRD2SzUcxl1WeSrsuXI6fHoiWpTARkkvDJRsdD5ceYSc+aYXbpJWvGSVhQ8AbvqgAZdUwun+kIa/ROwofIZICjD64JSdEWFFy6dE1w4J9/uiaXKREjrmOScCc+iUuShx7mgBAD830S3dUt49zRePc0AJd16Jj3Eb5p1/uaqtizJKnCNsi2SudJU40VLaI0ll2u1XdScB9zolqNRHGrZLHjcmWI0YCpP5PAKv/AFJOFB15rOfH3kzJQ2MVwsmsnldLhG+OFRLkaMAZKXZ/rcQZyGP2CyI8QkgDGgGq2bO0wmhv6ifVLPcFkyzcCclUfmX3vAoFUiNnhjuzmkixJyHeqTZdvbDeXO+EAieNZiirww35Em6TKqpWijFcWO9VQcWnefm0Khs1pe/zIEC6Sw1aXSM3e1QZzms7b22w6LKFJzjvNGsG9zjkFhbJiiyWt8TzzEvynJt0h3Bx10yXbx4VTUr+XqS9hOX6oR5Oq8Q7L8pkM+Y4kuk7AMJlOglPmdyxLJGYyKHTrEIq0jD4STiJScOaueJNsRoohi8zyp3p3CCSMDeJpj9Vze0IHlvLW1LvTDE5mTnTpkMVKWKMpPb0b9LJ+x2y75tHaHapuybEL64AUAzngqcfbJN4F1AsRkJzojLOwmcjfLfhaNTvwVmxbOEope1zLri0B16ZAreM8Z0lTeqJQe2r4M3uz7k6K1utkVkRnkOMQP8A+3+4ZY8JLoYVuDQ3zHAF0xP9MwByCq2axMaJmk8WinMqttOzi03WMdK4aYVMvop8RS3cI5ji1NqLtrydIIk9RopLNtBzDKcxkfsdy5qwWK2waeWHtyD2ngRUELdMF1wucwslUzLSZayKonGG7diyK/qixZX1OJ0Fktgf8OO8HH+VfZFXDWfadx9zXgQumslrnR2O45/yt2n1Uvhn2VzgnzHo0nummhNBSrd8XZUuB0uCSXDkVG90t579khiD5j37Kh8Oi1ckveBRLXvkoPMHzHl/CLw+Y8h+ErHRPLXohQXtT37ILhmUWFE0u+yll3L+VXvfuKL37j0RaCi6WnMppbxRfHyn3Tr2g6qwgNDe5oA7ml8zUd+6b5x7H8pcDHS0QR3VN8w9hF52vT8I4AZaXSbxWaHyV+3mg4LMiKc5bUKKsr2u0htT7DM5LHiRSSScSpLdFm46U/Kz4sReb1WZ5p14R0sONRRKXp96WKrwjKpQx03gJQXoReW5bUaWzYf+5e+UEjiafdXw/Fzvb8qCyljWmkyegySxHiVcJUVU8W5uQOabolDiBSpPQZTWW60gOkcMupV1sXLIjmCuX2hYrQHEiUv7gr9PijJ03RGbkvhLW1LrnEsANMcDqmbN2jDhgtiNDHGc3ETDp5ncsONCtbWucGTDQSSCCABU4LIhbWiuN1zZ1lQTXYjpd6rhr6jWtyRjskuDt7KfOheW+GxjRP4XXhTAt0WXYoDYYdFfEvSc5kKlCBQu4AU34yUGyNhWi1Mc+GyTGmRLjdE8hn/KfaWPviHHZ5IY1jGgEOvUNWSxBIcScyrXiUE05f6/tsvw6vHuuX9+xabtmHCEoU5uBvOwJcccdPqp7JbIkb/ejm7DEgxtQXlokDWshLnVWtm7DhGThMy+b8LE8W2h0QOawSa0ETmB7BZ4qPjz6lebWxncMceX5fZXtu1nRHhrT6QZca4D8rYhMIkRThRcT4XBdGaDukZDfIiS9Iugcdw7x3oz4UpbWzE/8dbSWx26tSQM/wDKvNtgIkazpLGehG9ZLIOJ3z9s08R3CY3Z0wniuRm07jyaceRT48m3Zi1rTdhta0/EAAAeIGKn85oaJAZ4YLIZG9JrPSWPVEaMAJGYoaa7sdyyN5OlJ/uyWxGzs7bLXuMPeFrrhtiO/wB29uLvqu4hlei0GVyhtbtoy6nGoy4HEUruUdFIN6hvaHkFsy+GVQHSCKJkz2Ai+e7qqsnQ4FqUFqjvnP6IvHPqErCiSbe5flJeb3L8pt89kIMQ9kfhOwovHh0STOXfNPL00v7orWVjZnuSSRyQTqmzURj5Hspp9knfdEV179kDGW0ekFZMfBbTmktIKyLSJUSz8wDHwzl45x4lU2GZOQV62MNeJWDbi8D0EgznT6FecxQt0dKabjUSxabZdcW98FoWF4LQQACRXPWZXOWaA4n1mucsV0NgbJo0V2SKikkZnjcI8l9vVVrfbrvpmobTaHTDWC891GgYqNuxIpP+96aTNQZcJUPNWYYxbpsi6XLGWW2vJBGE5e+MtTotKK0ATiuDQdxx4y3LJt214NmaGQW+r5pzPsVx+0dvEklxvuO7Ee+a1rTb5XFClmk1UTuLbtI+Q9kCTmuBaw4SJEjU7sZHNZnheyxmAl7GBs6h8w/DESBz3rm9nRozvWZhvdAFsRtrmUpq/wDXBOHDI+KZ6PatptbBZChSFJkjWp6lcRt4ujxGvY1z/KBaS0Eg4TaZeywIO04sSI2Gx5m43ZDjnwmfZds9rYMFkKHSpB1+Zx9ynbx/qk+fT7DnJRSil2c3bNvln+2JhzpTnu0G/mqjo02vad4mOPf1Wf41tB81sqED4t5rQHh911OzbTCZAD3SM5TBkZ5k5p5KWOMkuWLpdHM+A/8A7LuBNd3qFV6E94JFRiegXN2Y2N7nOYBBcaG76Z+4pzCdadjxP/wjXq0vCf8A3MVeaTnJyXBBuLfPB0NnduOfXcq9sbKorWuWNZrlI7LbBmXwyQMTDN7oK9FYsO1I0WTQHOnSo+5wUJwk4U1f0JxjT3JnTwYpcCGhsyKYTSbStTQ3y2m8aX3ajc0LmbDaQCQC4VIIBy3UWjAhzKwPGsd+puVPmzd2RDk0yC7GEaDgub2ZDkz2XRMpILdoYbXfql+WY9RKycb+Cr015BSRooaACQC4yE98gTIZmnRR3hn9FvzPpFGNeQJGvJF4aoBGfQJZjPoFTZYF4fu6pC7+7qi8OwiYzHJFgIXf3JJj93P+U69w6onw5lAF2eiS9opz3X+E0juavoqISTkkuuUpb3VF3uv5SHZBccl8sqa73VRWiKxjbzyGjM0Soa5AMKpbRgzF4e6y9oeK4TZiG2+cyJN/J6KnsjxXOIWxroDqCQkAcvwVNK1TLnpctb6C0w8RnUcVixoAnVdftOwzF5lRiNCubtYquJq8DxysvwZNyMt0EAzCuwZypIn6alV4olVFt2wGtDYQk6VSRga79/HXcqscVPtkdQ5Okkamy7IxkUPLrz5T/t9h8OO9aYtAJMwDLCdZE71y/hFxLosRxJo1ukzMn6Bbka0+mWGJWTVq8tLwPHjaVSK1r2RZI0S9EhiYafhJaHYSvBsp71iO8F2dkQxIIJBwY507p0LqkHUrds7mls5Yzrv0CgMSVQSVLFnzQ4jJ11Xgm8UWY9v2VEAowgCppMcSRTcsGPD3b8OZXam3OALiKAZ7gsbbO1WNsrA1jSXvBFJmdSCD825dDS5pydSKp4vQqeGtjmE99pdWQDYY/c74j9B7laW1Y9XGdAC3jme81ebD8tsJuMm3jxA/hc34ktPpEIUc+p76LRHdlnyZVc50ctaGRLQSA0k3jLcAMKk0GAU2y7EIZN8l06ENMhxBO/2WxCdcguhkNL3kX3GsgKyB3Emp9lFsuymNFENomSfaWpyXQnlqPokdzBpMMFuycl7Y/hZ0Z4cXFsIhpAmC6VJzMqL0JkOHBa0Ma0XcKVyxxJ1RZLK2CwDEyqTvP4VK02m9zXldRqZ6mfL4Rkkoyk2lwV9rw3PBiQp32/EASC5oG7cXDUV5LmxthkSjmBwIul0gx9dxOB6LpIMeswqG09gw4hMZguuJm8DB2bgNxz7np02p9mtk+vBRk06btGZBscO9KFIjORppqtizwZSVeyWMMEh1WnZYBODZ85KGbJvfBfjjtjybOy5EDSp9sFsQq1OAxVTZ9kutl7uPe5cf/qF4xEJps0A+sj1OH6Af/Y7ueU+9osco41KfZilF5J7YHP8A+onicx7SGQ3EQ4JIBBxifqdMZSlzWx4T8f4QrUdGxZdIgH/lzzXl6ex8lpkr7OtHHj9msUlwv3PpBkQEAiRBqCCJEZzmnd4heNeEfGUSyG471wjize3MsO7hgV65szacO0QxEhODmnmDk4biqJRowZ9PLFz2vUsEdzRXshST06InooGcjl3RJLQdFJeGXT+Ekx8vfJMC8XcUk9CnzQeK0UU2Rz0KT2T5apCNVGgs5Hxj4kfZYjYYAY1zbwiGszMgitBKm7euStO0HRPU55fkSZ8tF03+pWwWxoX9RUuhiRFasJxAzBPJeYWB8SEZS9B3HdqMlYopo6ulmlFcf78m5EiaqrFiqQPBqK/bioIiidHs6Xw14udClDjG8zAONZDcHZjXEfTq7VYIVoAfBIvETlPEaEYjgvJnq5snbMSzn0mbZ1bu4jIqE4xnHbJWjHm0Tb34uH+TqrXZHtJDmkd7jvWdEsoK6LZ3iiHHaBEAdPP4vY7/AKqWNsuFErCfI/K78/5XMyaKUecbv8mVZtr25FTM/ZEMMhHV0+gToloBdWprinRIUWCJOYbtaio4zGHus18ec9Vy5YpKb3Ivit3KJ3FtZz3YGXNV3GnxZgfQKEmlMU27SU1Yo0S2lHbNrLIV2eKrbJsxebMPiEy+sjduz3cS3mrW1LGHSE5q3sCyhhe87mholruW2EorHS7Kc3ELLO0onqNd27IFs5hcNtK1l8YuIIlRu6QFQfec/cLsbSDEm2jTIku3Na41JykPsuWtFk8yI57SSCfTexugBrZk6ALVpJKK3SKNNFbm2Fh2dEtESTfh3r07YWy4dnhhoHq3lcRsa1OguGMpESBAM88Cuqsu1S5syQRvmJOHEbxqFi/9GeXLxH4TXkt8LoubQjUosyI7L34KSLG3g0+irmLIzHFc7HCkCiL5kpSw3qQWuWBkchhrVQwbPEfRjSc5Ye5wVyHs6HDrGiCfytq73OA6rVj00snSIznGPbEgQzEf6W47sV0MGC2CAYhAybifYLBtXiJkFsoYEMSxNXHvVcFtzxLFjkhpLWHEz9TuJ3DQLrafRwxPdLl/YpjDJndR4XqdV4v8d0MGz44FwqG/Yu6DovNIhJJJJJJmSakk4klPkkIW67Oji08cUaiQkIT3NTCEwaoVpktzw5t+LZIl+GafqafheMnD6HcsNqmawpMshyqatHvuwNvw7XDvw8R8baXmHXTVaXmHReBbJ2tEszxEhuAIxBqCN4cN4XrnhHxNBt0NxaA17JX2yBFcC07xQ8lVKLXKOZqtL7J3Hr8HQGLqEnmajmnBwz6BF4ZnkqzGX65Dv2QZ6ImkmtRSEjmEXTn3zSTRPvsqIEUaDMEGoNCCKEHEGq858V+F/KnEh1h7xvZx/bqvSnS0VeM0HLkldF+DNLFK10eGuhlhmKd78whse9SUnDdnqMwu28T+GgAYkIUxczLVumi4W0WYb/YjEahO7O1iyRmt0Ai6qrEMlKIhHpfv+FwwPHIpsZmaVGmLI4FqLDMcs10OzttEijvY7ly8RklWdELTMGRS230U6jFGa5PTbL4hc3eR1CtnacGJ8cNjjmPS7pIrzexbd3Ppru/ha8O1tdvUJLxJHJeGnaOv8izHBz2cZEdapH7Ma74YrDxmPyuaZaDucef2UjbUdD7fhUS0+KXgW7IvJuO2NE3XXcHN+5Tn2CK1l0QyZmbpVlLcsQWx3+CQnC3uzd/y/hQ90x+rFKcn2XNobOjxBcbBiNbiRL4nZmW7IKtC2BGl/wDE4e0vqmnaD/mf/wAh+Ew25x/U/wD5D8Kb06flgpuKpI0IOwogxaBxc0fdTjZjW/FFht/6pnoFhujzxmeLj9kzzNByn9Sl7pj82P20zoDFszcYrnnJjZdTNNdtWG34IA/uiGfQ06LAMc58qfRQRLQApxwYo9RE5Tl2zctO3IjhIvMsmiQWRa9p3QTO6M9/M/ZYlt221tB6jkPuVkRLS55m48BuC0KLZbixRvkvW23GIf29TqVXATYYUoClVHXgkkNuoknFBKKJ8EckpYkdECqRtoAYVKkot9FWTNjgrkyeYVW0bQDaNqVXiF78fSFo7N2FEifAw8SCrFGK7Odl1U5cQ4Xq/wCDGix3voeQXrf+juwokFr7TELmeY0MYw0m2YcXkewl75hR+F/CDIZD4jREcKiY9LeDcOa9AgMPf+VXly2tqRgpJuTk2/maIePm6lKS3P6qKHDOXfNS+W5ZQNGXDmgg6c02aPZaigWR0RXMc0k9O+SL3fYSGFcwmOBzaln3X8I77oojK0aHqOq4jxV4cnOLDAze0dXD7hd64T398lVjNGY79ki7DlljlaPFHwpUuzG8fcKvEhlurOrfvJd74i2CGziQ8MXNG7MjTRcZHEict4UjuY8sckbiZ0VtKVCz4sNasWTfhw3jLUKpGYMcQmiUuTJiNUbI72Va6Wm7krkVg9lWfDVia6Zhy432i1Z/EJFHj3C04G3WO/UuaiwlUiQpI9hCXXBhnkyQ7VneM2i071KLYM154HuGBIUjbXEH6iovSvwyHvMPKZ6B/VjNIbYM1wX9dE+YprrZEP6ij3aXqJ6iHzO7fb2jeqkfbTG/qC4t0VxxJ5pqktN6sg9SvCOjtPiP5QT0WXH2hEiYmQyCqMhzVyDDU9kIdInj9plfohIMNW4aGsTrwUJOzqYsWxEoKlYQqrooGKrPjn9PfNRUbLpZ1A0Y0YDEqnEtxwaO+ChgQHxHSa0vdk2p9zu6Lp9leEHukYpuD5WyJ9z+FKkuzLk1cn8vycs5rnGp9vwFrbN8NRomDLo+Z32GK9C2X4cgw/hYJ5mp5res2zhkovJ6GN5ObRyGyPCENki4F7tcBwC6qx7NAoGge62IFgHyjkr8Gx6Dkqm2ytyvso2eyy3Dmr0GFoOatMhSy6KUAZ/RRYiFrdB1Th/aORUt4ZppiDPqVECUcUstUIWloqFlqlujNCEgFujNLdCEJDC6NUx8MJEIAqR4QXD+JfD2MSCKYuYN2rRlohCiX4csscrRxkaz6kFUYtnIMwZHfPB3HLihCmjvtEMWz3qSuuyO/gd6zo0MtMiEIQRkrRXe1RFiEKaZllBNkZgqMwEIUlJlEsEH4GGzpP6dCFJTZQ9NAUWZSss6RCTmycNPjXgsMhqUCSEKtuzYoKKtB5wCiiRSdEIUlFWVZMstrZasexo0U0YZfM70jka9F0ezfBooYri79om0e5xPRKhVubMTmzrLBshsMSYwNGQC14FhOQQhVsrs0YFhOY5K/Bsn7kIUWItss/8AcVL5IyPVCEUKxQzT6II0HNCEhij26oHtyKEIQH//2Q==',
+      title: 'Sayur Asem Jawa',
+      description: 'Citarasa asam segar yang menggugah selera, cocok untuk makan siang.'
+    },
+    {
+      id: 3,
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYTZbCEQPjMSxwHGorcPyxODdyLiD53z557Q&s',
+      title: 'Ayam Bakar Madu',
+      description: 'Ayam bakar dengan bumbu madu spesial, lezat dan empuk.'
+    },
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide === slides.length - 1 ? 0 : prevSlide + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide === 0 ? slides.length - 1 : prevSlide - 1
+    );
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  useEffect(() => {
+    const autoSlide = setInterval(nextSlide, 5000);
+    return () => clearInterval(autoSlide);
+  }, [currentSlide]);
+
+  return (
+    <div className="hero-carousel-container">
+      <div
+        className="carousel-track"
+        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+      >
+        {slides.map((slide, index) => (
+          <div
+            className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
+            key={slide.id}
+          >
+            <img src={slide.image} alt={slide.title} />
+            <div className="slide-content">
+              <h2>{slide.title}</h2>
+              <p>{slide.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button className="carousel-control prev" onClick={prevSlide}>
+        &#10094;
+      </button>
+      <button className="carousel-control next" onClick={nextSlide}>
+        &#10095;
+      </button>
+
+      <div className="carousel-dots">
+        {slides.map((_, index) => (
+          <span
+            key={index}
+            className={`dot ${index === currentSlide ? 'active' : ''}`}
+            onClick={() => goToSlide(index)}
+          ></span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default HeroCarousel;
+</file>
+
+<file path="src/components/Navbar.css">
+/* ======================================= */
+/* 1. Styling Utama (Desktop)  */
+/* ======================================= */
+
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFE08D; /* Background Kuning Muda */
+    padding : 15px 7%;
+    position: sticky; 
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Container untuk Logo dan Tombol Masuk */
+.nav-left {
+    /* Style ini tidak dipakai di JSX Anda, tapi dipertahankan untuk referensi */
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.logo-link {
+    text-decoration: none;
+}
+
+.logo{
+    width: 150px;
+    cursor: pointer;
+}
+
+/* ======================================= */
+/* 2. Navigasi & List Menu     */
+/* ======================================= */
+
+ul {
+    list-style: none;
+    display: flex; /* Default desktop: flex row */
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+ul li{
+    margin: 0 18px; 
+    padding: 5px 0; 
+    /* Gunakan properti list-item untuk transisi */
+    font-size: 17px;
+    font-weight: 500;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+/* Style Link Default (non-tombol) */
+ul li a{
+    text-decoration: none;
+    color: #DB944B; 
+    transition: color 0.2s;
+}
+
+ul li:hover {
+    color: #DB944B;
+    border-bottom: 3px solid #DB944B; 
+}
+
+ul li a:hover {
+    color: #A36F35; 
+}
+
+
+/* ======================================= */
+/* 3. Styling Tombol (Desktop) */
+/* ======================================= */
+
+/* Base Style untuk semua Tombol di Navbar (Masuk/Tambah Resep/Logout) */
+.login-link, 
+.add-recipe-link,
+.logout-btn {
+    /* Reset gaya default <li> dan <a> */
+    text-decoration: none;
+    display: flex; 
+    align-items: center;
+    gap: 6px; /* Jarak antara ikon dan teks */
+    white-space: nowrap; 
+
+    /* Gaya Tombol */
+    color: white !important; 
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* --- Tombol Masuk/Login --- */
+.login-link {
+    background-color: #DB944B; /* Warna oranye terang */
+}
+
+.login-link:hover {
+    background-color: #A36F35; /* Warna hover lebih gelap */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Tombol Tambah Resep (Di dalam ul <li>) --- */
+.add-recipe-link {
+    background-color: #cf8b3d; /* Warna oranye agak gelap */
+}
+
+.add-recipe-link:hover {
+    background-color: #7E5F34;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Tombol Logout (Sebagai <button>) --- */
+.logout-btn {
+    background-color: #c93b3b; /* Warna merah/bahaya */
+    margin: 0; /* Pastikan margin <li> yang mengelilinginya mengatur jarak */
+}
+
+.logout-btn:hover {
+    background-color: #a02e2e; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Styling Icon + --- */
+.plus-icon {
+    font-size: 1.2em;
+    font-weight: 900;
+    line-height: 1;
+    color: white; /* Warna ikon disamakan dengan warna teks (putih) */
+}
+
+/* --- Username Display --- */
+.username {
+    color: #DB944B; /* Warna disamakan dengan link */
+    font-weight: bold;
+    /* Hilangkan efek hover default list item */
+    border-bottom: none !important;
+    cursor: default;
+}
+.username:hover {
+    border-bottom: none;
+}
+
+
+/* --- Menghilangkan efek border-bottom pada <li> yang berisi tombol --- */
+/* Selector :has() mungkin tidak didukung di semua browser lama. 
+   Alternatif: gunakan class khusus pada <li> */
+li:has(.login-link),
+li:has(.add-recipe-link),
+li:has(.logout-btn) {
+    border-bottom: none;
+}
+li:has(.login-link):hover,
+li:has(.add-recipe-link):hover,
+li:has(.logout-btn):hover {
+    border-bottom: none;
+}
+
+
+/* ======================================= */
+/* 4. Burger Menu (Mobile)     */
+/* ======================================= */
+
+.menu-icon {
+    display: none; 
+    cursor: pointer;
+    z-index: 1001; 
+    padding: 5px; 
+}
+
+.burger-img {
+    width: 30px;
+    height: 30px;
+    /* Invert warna untuk menyesuaikan dengan skema warna Anda */
+    filter: invert(40%) sepia(20%) saturate(600%) hue-rotate(340deg) brightness(80%); 
+}
+
+/* ======================================= */
+/* 5. MEDIA QUERY: Mobile/Tablet */
+/* ======================================= */
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 5%;
+    }
+
+    /* Tampilkan ikon burger/close */
+    .menu-icon {
+        display: block; 
+    }
+    
+    /* Sembunyikan menu di desktop, tampilkan hanya jika 'open' */
+    ul {
+        display: flex; 
+        position: fixed;
+        top: 0; 
+        right: -100%; 
+        width: 70%; 
+        height: 100vh; 
+        background: #F9F1E5; /* Warna latar belakang mobile */
+        flex-direction: column; 
+        justify-content: flex-start; 
+        padding-top: 100px; 
+        transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+        z-index: 999;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Saat menu memiliki class 'open', tampilkan di layar */
+    ul.open {
+        right: 0;
+    }
+
+    ul li {
+        display: block; 
+        width: 100%;
+        margin: 0;
+        padding: 15px 30px; 
+        border-bottom: 1px solid #DB944B1A; 
+    }
+    
+    /* Hapus hover effect border di mobile, ganti dengan background sederhana */
+    ul li:hover {
+        border-bottom: none;
+        background-color: #FFE08D30; 
+    }
+    
+    /* Reset Gaya Tombol di Mobile (Kembali ke tampilan link) */
+    .login-link, 
+    .add-recipe-link,
+    .logout-btn {
+        background-color: transparent;
+        color: #DB944B !important; /* Warna link mobile */
+        padding: 5px 0; /* Padding list item */
+        border-radius: 0;
+        box-shadow: none;
+        font-weight: bold;
+        /* Tambahkan display block agar mengisi seluruh lebar li */
+        display: block; 
+        width: 100%;
+        text-align: left;
+    }
+
+    .login-link:hover, 
+    .add-recipe-link:hover,
+    .logout-btn:hover {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    /* Set warna ikon kembali ke warna link mobile */
+    .add-recipe-link .plus-icon {
+        color: #DB944B; 
+    }
+    
+    /* Style Username Mobile */
+    .username {
+        color: #DB944B;
+        font-weight: bold;
+        /* Tambahkan background saat hover */
+    }
+    .username:hover {
+        background-color: #FFE08D30;
+    }
+}
+</file>
+
+<file path="src/components/Navbar.jsx">
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './Navbar.css';
+import logo from '../assets/logo.png';
+import burgerIcon from '../assets/hamburger.png';
+import closeIcon from '../assets/tutup.webp';
+import { useAuth } from '../context/AuthContext';
+
+const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
+
+  const toggleMenu = () => {
+    setMenuOpen(prev => !prev);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    setMenuOpen(false);
+    window.location.reload(); // refresh supaya langsung kembali ke state tanpa user
+  };
+
+  return (
+    <div className='navbar'>
+      <Link to="/" className='logo-link'> 
+        <img src={logo} alt="logo" className='logo'/>
+      </Link>
+    
+      <div className="menu-icon" onClick={toggleMenu}>
+        <img 
+          src={menuOpen ? closeIcon : burgerIcon} 
+          alt={menuOpen ? "tutup" : "menu"} 
+          className='burger-img'
+        />
+      </div>
+      
+      <ul className={menuOpen ? 'open' : ''}>
+        {!user ? (
+          <>
+            <li><Link to="/login" onClick={toggleMenu} className="login-link">Masuk</Link></li>
+            <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
+            <li><Link to="/kategori" onClick={toggleMenu}>Kategori</Link></li>
+            <li><Link to="/favorite" onClick={toggleMenu}>Favorite</Link></li>
+            <li><Link to="/tambah-resep" onClick={toggleMenu}>Tambah Resep</Link></li>
+          </>
+        ) : (
+          <>
+            <li className="username">👋 Halo, {user.name}</li>
+            <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
+            <li><Link to="/kategori" onClick={toggleMenu}>Kategori</Link></li>
+            <li><Link to="/favorite" onClick={toggleMenu}>Favorite</Link></li>
+            <li>
+              <Link to="/tambah-resep" onClick={toggleMenu} className="add-recipe-link">
+                <span className="plus-icon">+</span> Tambah Resep
+              </Link>
+            </li>
+            <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
+          </>
+        )}
+      </ul>
+    </div>
+  );
+};
+
+export default Navbar;
+</file>
+
+<file path="src/components/ProtectedRoute.jsx">
+// ProtectedRoute.js
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+
+const ProtectedRoute = ({ children }) => {
+  // 1. Ambil status login dari Local Storage
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  // 2. Cek apakah pengguna ada
+  if (!user) {
+    // Jika user tidak ada (belum login), redirect ke halaman /login
+    // 'replace: true' memastikan halaman yang di-redirect tidak disimpan di histori
+    return <Navigate to="/login" replace={true} />;
+  }
+
+  // 3. Jika user ada (sudah login), tampilkan children (halaman tujuan)
+  return children;
+};
+
+export default ProtectedRoute;
+</file>
+
+<file path="src/components/Recipecard.css">
+/* src/components/RecipeCard.css */
+
+.resep-card-link {
+    text-decoration: none; 
+    color: inherit;
+}
+
+/* --- Kartu Resep dengan BORDER KUNING (Sesuai Gambar 2) --- */
+.resep-card {
+    background: white;
+    /* Border KUNING CERAH tebal 3px */
+    border: 3px solid #FFD700; 
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    color: #DB944B;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease-in-out;
+    height: 100%;
+}
+.resep-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.resep-card-img {
+    width: 100%;
+    /* Tinggi gambar lebih kecil, sesuai gambar */
+    height: 180px; 
+    object-fit: cover;
+    /* Border bawah juga 3px kuning */
+    border-bottom: 3px solid #FFD700; 
+}
+
+.resep-card-info {
+    padding: 15px;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.resep-card-title {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #DB944B; 
+    font-weight: bold;
+}
+
+/* --- Style RATING --- */
+.rating-stars {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: gold; 
+}
+
+.rating-value {
+    font-size: 0.9em;
+    color: #666; 
+    margin-left: 5px;
+    font-weight: normal;
+}
+
+.resep-card-category {
+    font-size: 0.9em;
+    color: #555; 
+    margin-top: 10px;
+}
+</file>
+
+<file path="src/components/RecipeCard.jsx">
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './RecipeCard.css';
+
+const RecipeCard = ({ recipe }) => {
+  const {
+    id,
+    name,
+    categories, // ✅ BENAR: dari resep.js
+    rating,
+    image 
+  } = recipe;
+
+  const renderRating = (rating) => {
+    // ... kode rating tetap
+  };
+  
+  const categoryDisplay = categories 
+    ? (Array.isArray(categories) ? categories.join(', ') : categories)
+    : 'Tidak Ada Kategori'; // ✅ BENAR: handle categories array
+
+  return (
+    <Link to={`/resep/${id}`} className='resep-card-link'>
+        <div className='resep-card'> 
+            {image ? (
+                <img 
+                  src={image} 
+                  alt={name} 
+                  className='resep-card-img'
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                  }}
+                />
+            ) : (
+                <div className='img-placeholder'>
+                    <span className='recipe-emoji'>👨‍🍳</span>
+                </div>
+            )}
+
+            <div className='resep-card-info'>
+                <h3 className='resep-card-title'>{name}</h3>
+                {renderRating(rating)}
+                <p className='resep-card-category'>
+                    Kategori: {categoryDisplay}
+                </p>
+            </div>
+        </div>
+    </Link>
+  );
+};
+
+export default RecipeCard;
+</file>
+
+<file path="src/components/ResepiForm.css">
+.recipe-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+  
+  .recipe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group textarea {
+    padding: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input[type="text"]:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #FF8100;
+  }
+  
+  .dynamic-field {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .dynamic-field input,
+  .dynamic-field textarea {
+    flex: 1;
+  }
+  
+  .remove-btn {
+    background: #cf8b3d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .remove-btn:hover {
+    background: #cf8b3d;
+  }
+  
+  .add-btn {
+    background: #FF8100;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+    align-self: flex-start;
+  }
+  
+  .add-btn:hover {
+    background: #FF8100;
+  }
+  
+  .image-upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .file-input {
+    padding: 10px;
+    border: 2px dashed #e1e1e1;
+    border-radius: 6px;
+    background: #f9f9f9;
+  }
+  
+  .image-preview {
+    position: relative;
+    max-width: 300px;
+  }
+  
+  .image-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .remove-image-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s ease;
+  }
+  
+  .remove-image-btn:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  .submit-btn {
+    background: #FF8100;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .submit-btn:hover {
+    background: #e87400;
+  }
+  
+  /* Categories Styling */
+  .categories-container {
+    border: 2px solid #e1e1e1;
+    border-radius: 6px;
+    padding: 15px;
+    background: #f9f9f9;
+  }
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .category-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: white;
+    border: 2px solid #e1e1e1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+  }
+  
+  .category-checkbox:hover {
+    border-color: #FF8100;
+    background: #f0f9f0;
+  }
+  
+  .category-checkbox input[type="checkbox"] {
+    display: none;
+  }
+  
+  .checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .category-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+    background: #FF8100;
+    border-color: #FF8100;
+  }
+  
+  .category-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .category-checkbox input[type="checkbox"]:disabled + .checkbox-custom {
+    background: #f5f5f5;
+    border-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .category-checkbox:has(input[type="checkbox"]:disabled) {
+    background: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #ddd;
+  }
+  
+  .categories-selected {
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    border-left: 4px solid #FF8100;
+  }
+  
+  .categories-selected strong {
+    color: #333;
+  }
+  
+  .no-category {
+    color: #999;
+    font-style: italic;
+  }
+  
+  .categories-count {
+    float: right;
+    color: #FF8100;
+    font-weight: bold;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .recipe-form-container {
+      margin: 10px;
+      padding: 15px;
+    }
+    
+    .dynamic-field {
+      flex-direction: column;
+    }
+    
+    .remove-btn {
+      align-self: flex-end;
+    }
+  
+    .categories-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+    }
+    
+    .category-checkbox {
+      font-size: 12px;
+      padding: 6px 8px;
+    }
+  }
+</file>
+
+<file path="src/components/ResepiForm.jsx">
+import React, { useState } from 'react';
+import './ResepiForm.css';
+
+const RecipeForm = () => { 
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    ingredients: [''],
+    steps: [''],
+    categories: [],
+    image: null
+  });
+  
+  const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Daftar kategori yang tersedia
+  const availableCategories = [
+    'Ayam', 'Daging', 'Sayur', 'Aneka Minuman', 'Makanan Ringan', 'Mie',
+    'Aneka Nasi', 'Pudding & Dessert', 'Hidangan Laut', 'Makanan Sehat', 'Salad'
+  ];
+
+  // --- HANDLER LOGIC ---
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCategoryChange = (category) => {
+    setFormData(prev => {
+      const currentCategories = prev.categories;
+      const isSelected = currentCategories.includes(category);
+      if (isSelected) {
+        return { ...prev, categories: currentCategories.filter(cat => cat !== category) };
+      } else if (currentCategories.length < 3) {
+        return { ...prev, categories: [...currentCategories, category] };
+      }
+      return prev;
+    });
+  };
+
+  const handleIngredientChange = (index, value) => {
+    const newIngredients = [...formData.ingredients];
+    newIngredients[index] = value;
+    setFormData(prev => ({ ...prev, ingredients: newIngredients }));
+  };
+
+  const handleStepChange = (index, value) => {
+    const newSteps = [...formData.steps];
+    newSteps[index] = value;
+    setFormData(prev => ({ ...prev, steps: newSteps }));
+  };
+
+  const addIngredient = () => setFormData(prev => ({ ...prev, ingredients: [...prev.ingredients, ''] }));
+  const addStep = () => setFormData(prev => ({ ...prev, steps: [...prev.steps, ''] }));
+
+  const removeIngredient = (index) => {
+    if (formData.ingredients.length > 1) {
+      const newIngredients = formData.ingredients.filter((_, i) => i !== index);
+      setFormData(prev => ({ ...prev, ingredients: newIngredients }));
+    }
+  };
+
+  const removeStep = (index) => {
+    if (formData.steps.length > 1) {
+      const newSteps = formData.steps.filter((_, i) => i !== index);
+      setFormData(prev => ({ ...prev, steps: newSteps }));
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, image: file }));
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Fungsi konversi File ke Base64
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    if (formData.categories.length === 0) {
+      alert('Pilih minimal 1 kategori!');
+      setLoading(false);
+      return;
+    }
+    
+    try {
+      // 1. Konversi File ke Base64 (jika ada gambar)
+      let imageBase64 = '';
+      if (formData.image && formData.image instanceof File) {
+        imageBase64 = await convertToBase64(formData.image);
+      }
+      
+      // 2. Buat resep baru sesuai struktur resep.js
+      const newRecipe = {
+        id: Date.now(), // ID unik
+        name: formData.title,
+        categories: formData.categories,
+        image: imageBase64 || '', // Simpan sebagai base64
+        rating: 0, // Default rating 0
+        description: formData.description,
+        bahan: formData.ingredients
+          .filter(ing => ing.trim() !== '')
+          .map(ing => `- ${ing}`)
+          .join('\n'),
+        langkah: formData.steps
+          .filter(step => step.trim() !== '')
+          .map((step, index) => `${index + 1}. ${step}`)
+          .join('\n'),
+        createdAt: new Date().toISOString()
+      };
+
+      // 3. Simpan ke localStorage
+      const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+      localStorage.setItem('recipes', JSON.stringify([...existingRecipes, newRecipe]));
+
+      // 4. Reset form
+      setFormData({
+        title: '', description: '', ingredients: [''], steps: [''], categories: [], image: null
+      });
+      setImagePreview(null);
+
+      // 5. Tampilkan alert & redirect
+      alert('Resep berhasil ditambahkan!');
+      
+      // 6. Redirect ke halaman detail resep
+      window.location.href = `/resep/${newRecipe.id}`;
+      
+    } catch (error) {
+      console.error('Error saving recipe:', error);
+      alert('Terjadi kesalahan saat menyimpan resep');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="recipe-form-container">
+      <h2>Tambah Resep Baru</h2>
+      <form onSubmit={handleSubmit} className="recipe-form">
+        
+        {/* 1. Judul Resep */}
+        <div className="form-group">
+          <label htmlFor="title">Judul Resep *</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            required
+            placeholder="Masukkan judul resep..."
+          />
+        </div>
+
+        {/* 2. Deskripsi Resep */}
+        <div className="form-group">
+          <label htmlFor="description">Deskripsi Resep *</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            required
+            rows="4"
+            placeholder="Deskripsikan resep Anda..."
+          />
+        </div>
+
+        {/* 3. Kategori */}
+        <div className="form-group">
+          <label>Kategori * (Maksimal 3)</label>
+          <div className="categories-container">
+            <div className="categories-grid">
+              {availableCategories.map(category => (
+                <label key={category} className="category-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={formData.categories.includes(category)}
+                    onChange={() => handleCategoryChange(category)}
+                    disabled={formData.categories.length >= 3 && !formData.categories.includes(category)}
+                  />
+                  <span className="checkbox-custom"></span>
+                  {category}
+                </label>
+              ))}
+            </div>
+            <div className="categories-selected">
+              <strong>Kategori terpilih: </strong>
+              {formData.categories.length > 0 ? (
+                formData.categories.join(', ')
+              ) : (
+                <span className="no-category">Belum memilih kategori</span>
+              )}
+              <span className="categories-count">
+                ({formData.categories.length}/3)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. Bahan-bahan */}
+        <div className="form-group">
+          <label>Bahan-bahan *</label>
+          {formData.ingredients.map((ingredient, index) => (
+            <div key={index} className="dynamic-field">
+              <input
+                type="text"
+                value={ingredient}
+                onChange={(e) => handleIngredientChange(index, e.target.value)}
+                placeholder={`Bahan ${index + 1}...`}
+                required={index === 0}
+              />
+              {formData.ingredients.length > 1 && (
+                <button
+                  type="button"
+                  className="remove-btn"
+                  onClick={() => removeIngredient(index)}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          ))}
+          <button type="button" className="add-btn" onClick={addIngredient}>
+            + Tambah Bahan
+          </button>
+        </div>
+
+        {/* 5. Langkah-langkah */}
+        <div className="form-group">
+          <label>Langkah-langkah *</label>
+          {formData.steps.map((step, index) => (
+            <div key={index} className="dynamic-field">
+              <textarea
+                value={step}
+                onChange={(e) => handleStepChange(index, e.target.value)}
+                placeholder={`Langkah ${index + 1}...`}
+                rows="3"
+                required={index === 0}
+              />
+              {formData.steps.length > 1 && (
+                <button
+                  type="button"
+                  className="remove-btn"
+                  onClick={() => removeStep(index)}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          ))}
+          <button type="button" className="add-btn" onClick={addStep}>
+            + Tambah Langkah
+          </button>
+        </div>
+
+        {/* 6. Upload Foto */}
+        <div className="form-group">
+          <label>Foto Makanan</label>
+          <div className="image-upload-section">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="file-input"
+            /> 
+            {imagePreview && (
+              <div className="image-preview">
+                <img src={imagePreview} alt="Preview" />
+                <button
+                  type="button"
+                  className="remove-image-btn"
+                  onClick={() => {
+                    setImagePreview(null);
+                    setFormData(prev => ({ ...prev, image: null }));
+                  }}
+                >
+                  Hapus Foto
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* 7. Submit Button */}
+        <button type="submit" className="submit-btn" disabled={loading}> 
+          {loading ? 'Menyimpan...' : 'Simpan Resep'}
+        </button>
+        {loading && <p>Mohon tunggu, resep sedang diunggah...</p>} 
+      </form>
+    </div>
+  );
+}; 
+
+export default RecipeForm;
+</file>
+
+<file path="src/components/ResepiList.css">
+.recipe-list {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  .recipe-list h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    border-bottom: 2px solid #FF8100;
+    padding-bottom: 10px;
+  }
+  
+  .recipe-list-empty {
+    text-align: center;
+    padding: 60px 40px;
+    color: #666;
+    font-style: italic;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+  }
+  
+  .recipe-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .recipe-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 20px 0 20px;
+  }
+  
+  .recipe-card-header h4 {
+    color: #333;
+    margin: 0;
+    font-size: 20px;
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .delete-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  .delete-btn:hover {
+    background: #ffebee;
+  }
+  
+  .recipe-categories {
+    padding: 0 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .category-tag {
+    background-color: #FF8100;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    margin-top: 15px;
+  }
+  
+  .recipe-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .recipe-content {
+    padding: 20px;
+  }
+  
+  .recipe-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  
+  .recipe-section {
+    margin-bottom: 15px;
+  }
+  
+  .recipe-section strong {
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+  
+  .recipe-section ul,
+  .recipe-section ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+  
+  .recipe-section li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+    color: #555;
+  }
+  
+  .recipe-meta {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    text-align: right;
+  }
+  
+  .recipe-meta small {
+    color: #888;
+    font-size: 0.8rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .recipes-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .recipe-list {
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+    
+    .recipe-card-header {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .recipe-card-header h4 {
+      margin-right: 0;
+    }
+  
+    .recipe-categories {
+      padding: 0 15px;
+    }
+    
+    .category-tag {
+      font-size: 0.7rem;
+      padding: 3px 10px;
+    }
+  }
+</file>
+
+<file path="src/components/ResepiList.jsx">
+import React from 'react';
+import './ResepiList.css';
+
+
+const RecipeList = ({ recipes, onDelete }) => {
+  if (recipes.length === 0) {
+    return (
+      <div className="recipe-list-empty">
+        <p>🍽 Belum ada resep. Silakan tambah resep pertama Anda!</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="recipe-list">
+      <h3>📖 Resep Terbaru ({recipes.length})</h3>
+      <div className="recipes-grid">
+        {recipes.map(recipe => (
+          <div key={recipe.id} className="recipe-card">
+            <div className="recipe-card-header">
+              <h4>{recipe.title}</h4>
+              <button 
+                className="delete-btn"
+                onClick={() => onDelete(recipe.id)}
+                title="Hapus resep"
+              >
+                🗑
+              </button>
+            </div>
+            
+            {/* Tampilkan Kategori */}
+            {recipe.categories && recipe.categories.length > 0 && (
+              <div className="recipe-categories">
+                {recipe.categories.map((category, index) => (
+                  <span key={index} className="category-tag">
+                    {category}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            {recipe.image && (
+              <div className="recipe-image">
+                <img 
+                  src={typeof recipe.image === 'string' 
+                    ? recipe.image 
+                    : URL.createObjectURL(recipe.image)
+                  } 
+                  alt={recipe.title} 
+                />
+              </div>
+            )}
+            
+            <div className="recipe-content">
+              <p className="recipe-description">{recipe.description}</p>
+              
+              <div className="recipe-section">
+                <strong>🛒 Bahan-bahan:</strong>
+                <ul>
+                  {recipe.ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="recipe-section">
+                <strong>👨‍🍳 Langkah-langkah:</strong>
+                <ol>
+                  {recipe.steps.map((step, index) => (
+                    <li key={index}>{step}</li>
+                  ))}
+                </ol>
+              </div>
+              
+              <div className="recipe-meta">
+                <small>Dibuat pada: {new Date(recipe.createdAt).toLocaleDateString('id-ID')}</small>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default RecipeList;
+</file>
+
+<file path="src/context/AuthContext.jsx">
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import authService from '../services/authService';
+
+const AuthContext = createContext();
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth harus digunakan dalam AuthProvider');
+  }
+  return context;
+};
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Cek user pada mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    }
+    setIsLoading(false);
+  }, []);
+
+  const login = async (name, password) => {
+    const response = await authService.login(name, password);
+    setUser(response.user);
+    setToken(response.token);
+  };
+
+  const register = async (name, email, password) => {
+    const response = await authService.register(name, email, password);
+    setUser(response.user);
+    setToken(response.token);
+  };
+
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } catch (error) {
+      console.error('Error logout:', error);
+    }
+    setUser(null);
+    setToken(null);
+  };
+
+  const value = {
+    user,
+    token,
+    isLoading,
+    login,
+    register,
+    logout,
+    isAuthenticated: !!token,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+export default AuthContext;
+</file>
+
+<file path="src/data/data.js">
+// src/data.js
+export const heroItems = [
+  {
+    id: 1,
+    title: 'Ayam Penyet',
+    description: 'Ayam goreng yang dipenyet dengan sambal pedas. Cocok untuk makan siang dan lauk favorit!',
+    image: 'ayam_penyet.jpg', // Ganti dengan path gambar Anda
+  },
+  {
+    id: 2,
+    title: 'Nasi Goreng Spesial',
+    description: 'Nasi yang digoreng dengan bumbu khas, telur, ayam, dan sayuran segar.',
+    image: 'nasi_goreng.jpg', 
+  },
+  {
+    id: 3,
+    title: 'Sate Madura',
+    description: 'Potongan daging ayam/kambing yang dibakar, disajikan dengan bumbu kacang yang kental.',
+    image: 'sate_madura.jpg', 
+  },
+];
+
+export const favoriteFoods = [
+  {
+    id: 101,
+    title: 'Sjakdajdi',
+    description: 'uehwiufhqwndhqw ihdqjugsiqwgdugif sab ojkcfiuhei',
+    image: 'soto_daging.jpg', 
+  },
+  {
+    id: 102,
+    title: 'Sjakdajdi',
+    description: 'uehwiufhqwndhqw ihdqjugsiqwgdugif sab ojkcfiuhei',
+    image: 'soto_daging.jpg', 
+  },
+  {
+    id: 103,
+    title: 'Sjakdajdi',
+    description: 'uehwiufhqwndhqw ihdqjugsiqwgdugif sab ojkcfiuhei',
+    image: 'soto_daging.jpg', 
+  },
+];
+</file>
+
+<file path="src/data/resep.js">
+import Ayam from '../assets/Ayam.png'; 
+import Daging from '../assets/Daging.png';
+import Salad from '../assets/Salad.png';
+
+
+export const initialRecipes = [
+  { 
+    id: 1, 
+    name: 'Ayam Bakar Madu', 
+    categories: ['Ayam', 'Daging'], 
+    image: Ayam, 
+    rating: 4.5, 
+    description: "Resep ayam bakar madu yang manis dan gurih. Cocok untuk makan malam keluarga.",
+    bahan: "- 1 ekor ayam, potong menjadi 4 bagian \n- 100 ml madu\n- 3 siung bawang putih, haluskan\n- 1 sdt garam\n- 1 sdt merica\n- 2 sdm kecap manis\n- 1 sdm minyak zaitun\n- Air jeruk nipis secukupnya\n- Daun pisang untuk membungkus (opsional)",
+    langkah: "1. Bersihkan ayam, lumuri dengan air jeruk nipis. Diamkan 15 menit.\n2. Campur madu, bawang putih, garam, merica, kecap manis, dan minyak zaitun untuk bumbu marinasi.\n3. Lumuri ayam dengan bumbu, diamkan minimal 2 jam (lebih baik semalaman).\n4. Bakar ayam di atas bara api/teflon sambil diolesi sisa bumbu hingga matang sempurna.",
+  },
+  { 
+    id: 2, 
+    name: 'Steak Daging Sapi Lada Hitam', 
+    categories: ['Daging', 'Makanan Sehat'], 
+    image: Daging, 
+    rating: 5.0, 
+    description: "Steak sapi premium dengan saus lada hitam pedas dan kaya rasa.",
+    bahan: "- 200g daging sapi (sirloin/tenderloin)\n- 1 sdm lada hitam, tumbuk kasar\n- 1 sdt garam\n- 2 sdm mentega\n- 2 siung bawang putih, geprek\n- Bahan Saus: Bawang bombay, kecap inggris, air kaldu.",
+    langkah: "1. Lumuri daging dengan garam dan lada hitam. Diamkan 30 menit.\n2. Panaskan wajan, lelehkan mentega. Masukkan daging dan bawang putih geprek.\n3. Masak sesuai tingkat kematangan yang diinginkan (medium rare, medium, well done).\n4. Angkat steak. Gunakan sisa mentega untuk membuat saus lada hitam. Siram di atas steak.",
+  },
+  { 
+    id: 3, 
+    name: 'Salad Buah Segar', 
+    categories: ['Salad', 'Makanan Sehat', 'Aneka Minuman'], 
+    image: Salad, 
+    rating: 4.8, 
+    description: "Kumpulan buah-buahan segar dengan dressing yoghurt manis yang ringan.",
+    bahan: "- 1 buah apel, potong dadu\n- 1 buah melon, potong dadu\n- 100g anggur, belah dua\n- Bahan Dressing: 100ml yoghurt plain, 2 sdm madu, 1 sdm kental manis.",
+    langkah: "1. Cuci bersih semua buah dan potong sesuai selera.\n2. Campur semua bahan dressing hingga merata.\n3. Campurkan buah dengan dressing tepat sebelum disajikan.\n4. Dinginkan sebentar di kulkas untuk rasa yang lebih nikmat.",
+  },
+];
+
+export const categories = [
+    'Semua Resep', 'Ayam', 'Daging', 'Sayur', 'Aneka Minuman', 'Makanan Ringan', 
+    'Mie', 'Aneka Nasi', 'Puding & Dessert', 'Hidangan Laut', 'Makanan Sehat', 'Salad'
+];
+</file>
+
+<file path="src/hooks/useResep.js">
+// src/hooks/useResep.js
+import { useState, useEffect, useCallback } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; 
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY", 
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID", 
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const useResep = () => {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true); // Default TRUE saat memuat awal
+  const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  // Dapatkan ID Pengguna dari localStorage (simulasi autentikasi)
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user')); 
+    if (user && user.uid) {
+        setUserId(user.uid);
+    } else {
+        setError("User ID tidak ditemukan. Harap login.");
+        setLoading(false);
+    }
+  }, []);
+
+  // ... (getCollectionRef dan fetchRecipes) ...
+
+  const getCollectionRef = useCallback(() => {
+    if (!userId) return null;
+    return collection(db, 'users', userId, 'recipes');
+  }, [userId]);
+
+  const fetchRecipes = useCallback(async () => {
+    if (!userId) return;
+    setLoading(true);
+    try {
+      const q = query(getCollectionRef(), orderBy('createdAt', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const recipesList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setRecipes(recipesList);
+      setError(null); // Clear error after successful fetch
+    } catch (e) {
+      console.error("Error fetching recipes: ", e);
+      setError("Gagal memuat resep dari server.");
+    } finally {
+      setLoading(false);
+    }
+  }, [userId, getCollectionRef]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchRecipes();
+    }
+  }, [userId, fetchRecipes]);
+
+
+  // 4. Tambah Resep (CREATE) - FUNGSI INI MENGATUR LOADING STATE
+  const addRecipe = async (recipeData) => {
+    if (!userId) {
+        alert("Gagal menyimpan: Pengguna belum terautentikasi.");
+        return;
+    }
+    
+    setLoading(true); // 👈 PENTING: MULAI LOADING
+    setError(null);
+
+    try {
+      let imageUrl = '';
+      
+      // Upload Gambar ke Firebase Storage
+      if (recipeData.image) {
+        const imageRef = ref(storage, `recipe_images/${userId}/${Date.now()}_${recipeData.image.name}`);
+        await uploadBytes(imageRef, recipeData.image);
+        imageUrl = await getDownloadURL(imageRef);
+      }
+      
+      const recipeToSave = {
+        ...recipeData,
+        image: imageUrl, 
+        createdAt: new Date().toISOString(),
+        rating: 0 
+      };
+
+      await addDoc(getCollectionRef(), recipeToSave);
+      
+      // Refresh daftar resep setelah berhasil simpan
+      await fetchRecipes(); 
+
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      setError("Gagal menyimpan resep ke server. Cek konsol dan aturan Firebase.");
+      alert("Penyimpanan gagal. Cek error di konsol.");
+
+    } finally {
+      // Tidak perlu set loading ke false di sini, karena fetchRecipes() sudah melakukannya
+      // Jika Anda tidak memanggil fetchRecipes, Anda harus memanggil setLoading(false) di sini.
+    }
+  };
+  
+  // ... (fungsi deleteRecipe) ...
+
+  const deleteRecipe = async (id) => {
+    if (!userId) return;
+    setLoading(true);
+    try {
+      await deleteDoc(doc(getCollectionRef(), id));
+      await fetchRecipes(); 
+    } catch (e) {
+      console.error("Error deleting document: ", e);
+      setError("Gagal menghapus resep.");
+    } finally {
+      // Loading akan diset ke false oleh fetchRecipes()
+    }
+  };
+
+  return { recipes, loading, error, addRecipe, deleteRecipe, userId };
+};
+
+export default useResep;
+</file>
+
+<file path="src/index.css">
+@import url('https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Coming+Soon&display=swap" rel="stylesheet');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Alan Sans", sans-serif;
+}
+
+.container {
+    max-width: 100vm;
+    min-height: 100vh;
+    background: #FFFDE7;
+}
+</file>
+
+<file path="src/index.js">
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</file>
+
+<file path="src/main.jsx">
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.jsx';
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+</file>
+
+<file path="src/pages/DetailResep.css">
+/* src/pages/DetailResep.css */
+
+.detail-page {
+    padding: 40px 7%;
+    background-color: #F9F1E5; 
+    min-height: 90vh; 
+}
+
+.back-button {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #DB944B;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+    font-size: 1.1em;
+}
+.back-button:hover {
+    color: #a87236;
+}
+
+.detail-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+}
+
+.detail-image {
+    width: 40%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.detail-info {
+    width: 60%;
+}
+
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-info h2 {
+    color: #DB944B;
+    font-size: 2.2em;
+    margin: 0;
+}
+
+.metadata {
+    font-size: 0.95em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.avg-rating {
+    color: gold;
+    font-size: 1.1em;
+}
+
+.description {
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 25px;
+    white-space: pre-wrap; /* Memastikan baris baru di deskripsi berfungsi */
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #FFE08D;
+    margin: 20px 0;
+}
+
+/* --- Favorite Button --- */
+.favorite-btn {
+    padding: 8px 15px;
+    border: 2px solid #DB944B;
+    background: transparent;
+    color: #DB944B;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.favorite-btn.active {
+    background: #DB944B;
+    color: white;
+    border-color: #DB944B;
+}
+
+/* --- User Rating Controls --- */
+.user-rating-section h3 {
+    color: #DB944B;
+    margin-bottom: 10px;
+}
+
+.rating-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.star {
+    font-size: 2.5em;
+    cursor: pointer;
+    transition: transform 0.1s, color 0.1s;
+}
+.star:hover {
+    transform: scale(1.1);
+}
+
+.star.filled {
+    color: gold;
+}
+.star.empty {
+    color: #ccc;
+}
+
+.rating-status {
+    color: #666;
+    font-style: italic;
+    font-size: 1em;
+}
+
+/* Responsif */
+@media (max-width: 800px) {
+    .detail-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+    .detail-image, .detail-info {
+        width: 100%;
+    }
+    .detail-image {
+        max-height: 250px;
+    }
+    .header-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+
+.bahan-bahan, .langkah-langkah, .description {
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 25px;
+    padding-left: 10px;
+    
+    white-space: pre-wrap; 
+}
+</file>
+
+<file path="src/pages/DetailResep.jsx">
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { initialRecipes } from '../data/resep'; 
+import './DetailResep.css'; 
+
+const DetailResep = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    
+    const [recipe, setRecipe] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [isFavorite, setIsFavorite] = useState(false); 
+    const [userRating, setUserRating] = useState(0); 
+
+    const isUserLoggedIn = () => {
+        return !!localStorage.getItem('user'); 
+    };
+
+    useEffect(() => {
+        const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+        const allRecipes = [...initialRecipes, ...savedRecipes];
+        
+        const recipeId = parseInt(id);
+        const foundRecipe = allRecipes.find(r => r.id === recipeId || r.id.toString() === id);
+        setRecipe(foundRecipe);
+        
+        const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
+        const storedRating = parseInt(localStorage.getItem(`recipe-${id}-rating`)) || 0;
+        setIsFavorite(storedFav);
+        setUserRating(storedRating);
+        
+        setLoading(false);
+    }, [id]);
+
+    const toggleFavorite = () => {
+        if (!isUserLoggedIn()) {
+            alert("Anda harus login untuk menyimpan resep ke Favorite!");
+            navigate('/login');
+            return;
+        }
+
+        const newFavStatus = !isFavorite;
+        setIsFavorite(newFavStatus);
+        localStorage.setItem(`recipe-${id}-favorite`, newFavStatus);
+        window.dispatchEvent(new Event('storage'));
+    };
+
+    const handleRating = (rate) => {
+        if (!isUserLoggedIn()) {
+            alert("Anda harus login untuk memberi nilai (rating) resep ini!");
+            navigate('/login');
+            return;
+        }
+
+        setUserRating(rate);
+        localStorage.setItem(`recipe-${id}-rating`, rate);
+    };
+
+    const renderStars = (currentRating) => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            stars.push(
+                <span 
+                    key={i} 
+                    className={`star ${i <= currentRating ? 'filled' : 'empty'}`}
+                    onClick={() => handleRating(i)}
+                >
+                    ★
+                </span>
+            );
+        }
+        return stars;
+    };
+    
+    const renderAverageRating = () => {
+        if (!recipe || !recipe.rating) return null;
+        const rating = recipe.rating;
+        const displayRating = Math.round(rating * 2) / 2;
+        const fullStars = Math.floor(displayRating);
+        const hasHalfStar = displayRating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+        
+        return (
+            <span className="avg-rating">
+                {'★'.repeat(fullStars)}
+                {hasHalfStar ? '½' : ''}
+                {'☆'.repeat(emptyStars)} 
+                <span style={{color: '#333', marginLeft: '5px'}}>({rating.toFixed(1)}/5)</span>
+            </span>
+        );
+    };
+
+    if (loading) {
+        return <div className="detail-page" style={{textAlign: 'center', padding: '50px'}}>
+            <div>Memuat resep...</div>
+        </div>;
+    }
+
+    if (!recipe) {
+        return <div className="detail-page" style={{textAlign: 'center', color: '#DB944B'}}>
+            <Link to="/kategori" className="back-button">← Kembali ke Daftar Resep</Link>
+            <p>Resep dengan ID {id} tidak ditemukan.</p>
+        </div>;
+    }
+
+    return (
+        <div className="detail-page">
+            <Link to="/kategori" className="back-button">← Kembali ke Daftar Resep</Link>
+
+            <div className="detail-container">
+                <img 
+                  src={recipe.image} 
+                  alt={recipe.name} 
+                  className="detail-image"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/600x400?text=No+Image';
+                  }}
+                />
+                
+                <div className="detail-info">
+                    
+                    <div className="header-info">
+                        <h2>{recipe.name}</h2>
+                        <button onClick={toggleFavorite} className={`favorite-btn ${isFavorite ? 'active' : ''}`}>
+                            {isFavorite ? '❤️ Favorite Tersimpan' : '🤍 Tambahkan ke Favorite'}
+                        </button>
+                    </div>
+
+                    <div className="metadata">
+                        <p>Kategori: <strong>{Array.isArray(recipe.categories) ? recipe.categories.join(', ') : recipe.categories}</strong></p>
+                        {recipe.rating && <p>Rating Rata-rata: {renderAverageRating()}</p>}
+                    </div>
+
+                    <div className="description">
+                        <h3>Deskripsi:</h3>
+                        <p>{recipe.description}</p>
+                    </div>
+
+                    <div className="bahan-bahan">
+                        <h3>Bahan - bahan:</h3>
+                        <div className="ingredients-content">
+                            {recipe.bahan ? (
+                                recipe.bahan.split('\n').map((line, index) => (
+                                    line.trim() && <div key={index} className="ingredient-item">{line}</div>
+                                ))
+                            ) : (
+                                <p>Belum ada bahan yang ditambahkan</p>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="langkah-langkah">
+                        <h3>Langkah - langkah:</h3>
+                        <div className="steps-content">
+                            {recipe.langkah ? (
+                                recipe.langkah.split('\n').map((line, index) => (
+                                    line.trim() && <div key={index} className="step-item">{line}</div>
+                                ))
+                            ) : (
+                                <p>Belum ada langkah yang ditambahkan</p>
+                            )}
+                        </div>
+                    </div>
+                    
+                    <hr/>
+                    
+                    <div className="user-rating-section">
+                        <h3>Beri Nilai Resep Ini:</h3>
+                        <div className="rating-controls">
+                            {renderStars(userRating)}
+                            <span className="rating-status">
+                                {userRating > 0 
+                                    ? `Anda memberi ${userRating} bintang.` 
+                                    : 'Klik bintang untuk memberi nilai.'
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default DetailResep;
+</file>
+
+<file path="src/pages/Favorite.css">
+/* src/pages/Favorite.css */
+
+.favorite-page {
+    padding: 30px 7%;
+    background-color: #F9F1E5; 
+    min-height: 90vh; 
+}
+
+.page-title {
+    color: #DB944B;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+}
+
+/* Menggunakan kembali style grid dari Kategori.css */
+.resep-list-favorite {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    padding: 0 10px;
+}
+
+/* Menggunakan kembali style card dari Kategori.css */
+.resep-card-link {
+    text-decoration: none; 
+    color: inherit;
+}
+.resep-card {
+    background: white;
+    border: 3px solid #FFD700; /* Border kuning untuk menonjolkan favorit */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+    transition: transform 0.2s ease-in-out;
+}
+.resep-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.resep-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.resep-card-info {
+    padding: 15px;
+}
+
+/* Style saat tidak ada favorit */
+.no-favorites {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #888;
+    font-size: 1.3em;
+    padding: 50px;
+}
+.no-favorites a {
+    color: #DB944B;
+    font-weight: bold;
+    text-decoration: none;
+}
+.rating-stars {
+    color: gold; 
+}
+</file>
+
+<file path="src/pages/Favorite.jsx">
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { initialRecipes } from '../data/resep'; 
+import './Favorite.css';
+
+const Favorite = () => {
+    const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadFavorites = () => {
+            const favoriteIds = [];
+            
+            // Cari semua resep yang difavoritkan di localStorage
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                
+                if (key.startsWith('recipe-') && key.endsWith('-favorite') && localStorage.getItem(key) === 'true') {
+                    const idString = key.split('-')[1];
+                    favoriteIds.push(parseInt(idString));
+                }
+            }
+
+            // Gabungkan resep dari data.js DAN localStorage (resep yang ditambah user)
+            const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            const allRecipes = [...initialRecipes, ...savedRecipes];
+            
+            // Filter semua resep (bukan cuma initialRecipes)
+            const foundFavorites = allRecipes.filter(recipe => 
+                favoriteIds.includes(recipe.id)
+            );
+
+            setFavoriteRecipes(foundFavorites);
+            setLoading(false);
+        };
+
+        // Load pertama kali
+        loadFavorites();
+        
+        // Tambah event listener untuk update real-time saat user klik tombol favorit
+        window.addEventListener('storage', loadFavorites);
+        
+        // Cleanup
+        return () => {
+            window.removeEventListener('storage', loadFavorites);
+        };
+        
+    }, []);
+
+    // Fungsi untuk menampilkan bintang rating
+    const renderRating = (rating) => {
+        const displayRating = Math.round(rating * 2) / 2;
+        const fullStars = Math.floor(displayRating);
+        const hasHalfStar = displayRating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+        
+        return (
+            <span className="rating-stars">
+                {'★'.repeat(fullStars)}
+                {hasHalfStar ? '½' : ''}
+                {'☆'.repeat(emptyStars)}
+                <span className="rating-value">({rating.toFixed(1)})</span> 
+            </span>
+        );
+    };
+
+    if (loading) {
+        return <div className="favorite-page">Memuat Resep Favorit...</div>;
+    }
+
+    return (
+        <div className="favorite-page">
+            <h1 className="page-title">❤️ Resep Favorit Saya</h1>
+
+            <div className='resep-list-favorite'>
+                {favoriteRecipes.length > 0 ? (
+                    favoriteRecipes.map(recipe => (
+                        <Link 
+                            to={`/resep/${recipe.id}`} 
+                            key={recipe.id} 
+                            className='resep-card-link'
+                        >
+                            <div className='resep-card favorite-card'> 
+                                <img 
+                                  src={recipe.image} 
+                                  alt={recipe.name} 
+                                  className='resep-card-img'
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                                  }}
+                                />
+                                <div className='resep-card-info'>
+                                    <h3 className='resep-card-title'>{recipe.name}</h3>
+                                    {renderRating(recipe.rating || 0)}
+                                    <p className='resep-card-category'>
+                                        Kategori: {Array.isArray(recipe.categories) ? recipe.categories.join(', ') : recipe.categories}
+                                    </p>
+                                </div>
+                            </div>
+                        </Link>
+                    ))
+                ) : (
+                    <p className='no-favorites'>
+                        Anda belum memiliki resep favorit. 
+                        Coba jelajahi <Link to="/kategori">Kategori Resep</Link> dan tambahkan beberapa!
+                    </p>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default Favorite;
+</file>
+
+<file path="src/pages/Home.css">
+/* src/pages/Home.css */
+
+.home-page {
+    background-color: #F9F1E5; /* Background krem */
+    min-height: 100vh;
+}
+
+/* --- Section Resep Populer --- */
+.popular-recipes-section {
+    padding: 50px 7%; 
+    padding-bottom: 80px;
+}
+
+.popular-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title {
+    color: #DB944B; /* Warna oranye/cokelat */
+    font-size: 2.8em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 1.1em;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Layout Grid untuk RecipeCard: 3 kolom di desktop */
+.popular-recipes-grid {
+    display: grid; 
+    /* Gunakan 3 kolom yang sama lebar di desktop */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+}
+
+/* Responsivitas Mobile */
+@media (max-width: 1024px) {
+    .popular-recipes-grid {
+        /* Beralih ke 2 kolom di tablet */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (max-width: 600px) {
+    .popular-recipes-grid {
+        /* Beralih ke 1 kolom di HP */
+        grid-template-columns: 1fr; 
+    }
+}
+</file>
+
+<file path="src/pages/Home.jsx">
+import React, { useState, useEffect } from 'react';
+import HeroCarousel from '../components/HeroCarousel'; 
+import RecipeCard from '../components/RecipeCard'; 
+import './Home.css'; 
+import { initialRecipes } from '../data/resep';
+
+const Home = () => {
+  const [recipes, setRecipes] = useState([]);
+  
+  useEffect(() => {
+    // Fungsi untuk memuat resep dari localStorage
+    const loadRecipes = () => {
+      try {
+        const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+        setRecipes([...initialRecipes, ...savedRecipes]);
+      } catch (error) {
+        console.error('Error loading recipes:', error);
+        setRecipes(initialRecipes);
+      }
+    };
+    
+    // Load resep pertama kali
+    loadRecipes();
+    
+    // Tambah event listener untuk update otomatis
+    window.addEventListener('storage', loadRecipes);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('storage', loadRecipes);
+    };
+  }, []);
+  
+  // Ambil 3 resep terbaru (atau semua jika kurang dari 3)
+  const popularRecipes = recipes.slice(0, 3); 
+  
+  return (
+    <div className='home-page'>
+      <section className='hero-section'>
+        <HeroCarousel />
+      </section>
+      
+      <section className='popular-recipes-section'>
+        <div className='popular-header'>
+          <h2 className='section-title'>Resep Populer</h2>
+          <p className='section-subtitle'>
+            Temukan resep-resep terbaik yang paling banyak dicoba dan disukai oleh komunitas memasak kami
+          </p>
+        </div>
+        
+        <div className='popular-recipes-grid'>
+          {popularRecipes.length > 0 ? (
+            popularRecipes.map(recipe => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))
+          ) : (
+            <p className='no-recipes'>Belum ada resep. Silakan tambah resep pertama!</p>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;
+</file>
+
+<file path="src/pages/Kategori.css">
+/* src/pages/Kategori.css */
+
+.kategori-page {
+    padding: 30px 7%;
+    background-color: #F9F1E5; 
+    min-height: 90vh; 
+}
+
+/* --- Area Pencarian --- */
+.search-input-area {
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 40px; 
+}
+.cari {
+    display: flex;
+    align-items: center;
+    background: #ffe8d1;
+    padding: 10px 20px;
+    border-radius: 25px;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #DB944B;
+}
+.cari input {
+    padding: 6px 10px;
+    background: #ffe8d1;
+    border: transparent;
+    outline: 0;
+    color : #DB944B;
+    font-size: 18px;
+    flex: 1;
+}
+.cari img {
+    width: 25px;
+    margin-left: 10px;
+    filter: invert(1);
+    cursor: pointer;
+}
+
+/* --- Filter Container --- */
+.filter-container {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #FFE08D30; 
+    border-radius: 10px;
+}
+.filter-title {
+    color: #DB944B;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px; 
+    justify-content: center;
+}
+.filter-button {
+    background: #ffe8d1; 
+    color: #DB944B;
+    border: 2px solid #DB944B;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap; 
+}
+.filter-button:hover {
+    background: #DB944B;
+    color: white;
+}
+.filter-button.active {
+    background: #DB944B;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Garis pemisah */
+.separator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(219, 148, 75, 0), rgba(219, 148, 75, 0.75), rgba(219, 148, 75, 0));
+    margin: 40px 0;
+}
+
+/* --- Daftar Resep (GRID LAYOUT) --- */
+.resep-list {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    padding: 0 10px;
+}
+.list-header {
+    grid-column: 1 / -1; 
+    color: #DB944B;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Card Link Wrapper */
+.resep-card-link {
+    text-decoration: none; /* Hilangkan garis bawah dari Link */
+    color: inherit;
+}
+
+/* --- Kartu Resep dan Gambar --- */
+.resep-card {
+    background: white;
+    border: 1px solid #FFE08D;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    color: #DB944B;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease-in-out;
+    height: 100%; /* Penting untuk grid */
+}
+.resep-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+.resep-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #FFE08D;
+}
+.resep-card-info {
+    padding: 15px;
+    text-align: left;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.resep-card-title {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #DB944B;
+}
+
+/* --- Style RATING --- */
+.rating-stars {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: gold; 
+}
+
+.rating-value {
+    font-size: 0.8em;
+    color: #666; 
+    margin-left: 5px;
+    font-weight: normal;
+}
+
+.resep-card-category {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 10px;
+}
+
+.no-result {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #DB944B;
+    font-size: 1.2em;
+    padding: 30px;
+}
+
+/* --- Responsivitas Mobile --- */
+@media (max-width: 600px) {
+    .kategori-page {
+        padding: 20px 5%;
+    }
+    .filter-buttons {
+        justify-content: flex-start;
+        gap: 10px;
+    }
+    .filter-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .resep-list {
+        grid-template-columns: 1fr; 
+    }
+}
+</file>
+
+<file path="src/pages/Kategori.jsx">
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { initialRecipes, categories } from '../data/resep'; 
+import './Kategori.css'; 
+import cari from '../assets/cari.png'; 
+
+const Kategori = () => {
+  const [activeCategory, setActiveCategory] = useState('Semua Resep');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [allRecipes, setAllRecipes] = useState([]);
+
+  // Load resep dari localStorage
+  useEffect(() => {
+    const loadRecipes = () => {
+      try {
+        const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+        setAllRecipes([...initialRecipes, ...savedRecipes]);
+      } catch (error) {
+        console.error('Error loading recipes:', error);
+        setAllRecipes(initialRecipes);
+      }
+    };
+    
+    loadRecipes();
+    window.addEventListener('storage', loadRecipes);
+    
+    return () => {
+      window.removeEventListener('storage', loadRecipes);
+    };
+  }, []);
+
+  const handleFilterClick = (category) => {
+    setActiveCategory(category);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  
+  const filterRecipes = () => {
+    let filtered = allRecipes;
+    
+    if (activeCategory !== 'Semua Resep') {
+        filtered = allRecipes.filter(recipe => 
+            recipe.categories && recipe.categories.includes(activeCategory)
+        );
+    }
+    
+    if (searchTerm) {
+        const lowerCaseSearch = searchTerm.toLowerCase();
+        filtered = filtered.filter(recipe => 
+            recipe.name.toLowerCase().includes(lowerCaseSearch)
+        );
+    }
+    
+    return filtered;
+  };
+
+  const recipesToShow = filterRecipes();
+
+  // Fungsi untuk menampilkan bintang rating (Penuh, Setengah, Kosong)
+  const renderRating = (rating) => {
+    const displayRating = Math.round(rating * 2) / 2;
+    const fullStars = Math.floor(displayRating);
+    const hasHalfStar = displayRating % 1 !== 0;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    
+    return (
+      <span className="rating-stars">
+        {'★'.repeat(fullStars)}
+        {hasHalfStar ? '½' : ''}
+        {'☆'.repeat(emptyStars)}
+        <span className="rating-value">({rating.toFixed(1)})</span> 
+      </span>
+    );
+  };
+
+  return (
+    <div className='kategori-page'>
+      <div className='search-input-area'>
+         <div className='cari'> 
+           <input 
+               type="text" 
+               placeholder='Cari Resep di sini...' 
+               value={searchTerm}
+               onChange={handleSearchChange}
+           />
+           <img src={cari} alt="ikon pencarian"/>
+         </div>
+      </div>
+      
+      <div className='filter-container'>
+        <h2 className='filter-title'>Pilih Kategori Resep:</h2>
+        <div className='filter-buttons'>
+          {categories.map((category) => (
+            <button
+              key={category}
+              className={`filter-button ${activeCategory === category ? 'active' : ''}`}
+              onClick={() => handleFilterClick(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <hr className='separator' />
+
+      <div className='resep-list'>
+        <h1 className='list-header'>Resep untuk Kategori: {activeCategory}</h1>
+        
+        {recipesToShow.length > 0 ? (
+            recipesToShow.map(recipe => (
+                <Link 
+                    to={`/resep/${recipe.id}`} 
+                    key={recipe.id} 
+                    className='resep-card-link'
+                >
+                    <div className='resep-card'> 
+                        <img 
+                          src={recipe.image} 
+                          alt={recipe.name} 
+                          className='resep-card-img'
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                          }}
+                        />
+                        <div className='resep-card-info'>
+                            <h3 className='resep-card-title'>{recipe.name}</h3>
+                            {renderRating(recipe.rating || 0)}
+                            <p className='resep-card-category'>
+                                Kategori: {Array.isArray(recipe.categories) ? recipe.categories.join(', ') : recipe.categories}
+                            </p>
+                        </div>
+                    </div>
+                </Link>
+            ))
+        ) : (
+            <div className='no-result'>
+              <p>Tidak ada resep ditemukan.</p>
+              <Link to="/tambah-resep" className="add-recipe-link">
+                + Tambah Resep Pertama
+              </Link>
+            </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Kategori;
+</file>
+
+<file path="src/pages/LoginRegister.css">
+/* Wrapper agar container di tengah layar */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5; /* opsional background */
+}
+
+/* Container utama */
+.container {
+  background-color: #FFFDE7;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px #4c131359;
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+/* Text */
+.container p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  margin: 20px 0;
+}
+
+.container span {
+  font-size: 12px;
+}
+
+.container a {
+  color: #DB944B;
+  font-size: 13px;
+  text-decoration: none;
+  margin: 15px 0 10px;
+}
+
+/* Button */
+.container button {
+  background-color: #DB944B;
+  color: #FFFDE7;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.container button:hover {
+  background-color: #d0853a;
+  transform: translateY(-2px);
+}
+
+.container button.hidden {
+  background-color: transparent;
+  border-color: #DB944B;
+  color: #DB944B;
+}
+
+.container button.hidden:hover {
+  background-color: #DB944B;
+  color: #FFFDE7;
+}
+
+/* Form */
+.container form {
+  background-color: #FFE08D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+}
+
+.container input {
+  background-color: #FECB72;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.container input:focus {
+  background-color: #fec05a;
+  transform: translateY(-2px);
+}
+
+/* Animasi form */
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+.sign-in {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.container.active .sign-in {
+  transform: translateX(100%);
+}
+
+.sign-up {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+.container.active .sign-up {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: move 0.6s;
+}
+
+@keyframes move {
+  0%, 49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  50%, 100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+/* Toggle */
+.toggle-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 20px;
+  z-index: 1000;
+}
+
+.container.active .toggle-container {
+  transform: translateX(-100%);
+  border-radius: 20px;
+}
+
+.toggle {
+  background-color: #FFFDE7;
+  height: 100%;
+  color: #DB944B;
+  position: relative;
+  left: -100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.container.active .toggle {
+  transform: translateX(50%);
+}
+
+.toggle-panel {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30px;
+  text-align: center;
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.toggle-left {
+  transform: translateX(-200%);
+}
+
+.container.active .toggle-left {
+  transform: translateX(0);
+}
+
+.toggle-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.container.active .toggle-right {
+  transform: translateX(200%);
+}
+
+/* Text colors */
+h2 {
+  color: #DB944B !important;
+  margin: 10px 0 5px 0;
+}
+
+.toggle-panel h1 {
+  color: #DB944B;
+  margin: 15px 0 10px 0;
+  font-size: 24px;
+}
+
+.toggle-panel p {
+  color: #61330C;
+  margin-bottom: 20px;
+}
+
+/* Logo styling */
+.toggle-panel img {
+  margin-bottom: 10px;
+}
+
+/* Message styling */
+.message {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  animation: slideIn 0.3s ease;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    min-height: 600px;
+  }
+  .form-container {
+    width: 100%;
+  }
+  .toggle-container {
+    display: none; /* sembunyikan toggle di layar kecil */
+  }
+}
+</file>
+
+<file path="src/pages/LoginRegister.jsx">
+import React, { useState } from 'react';
+import './LoginRegister.css';
+import logo from '../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
+import authService from '../services/authService';
+
+const LoginRegister = () => {
+  const [isActive, setIsActive] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [signUpMessage, setSignUpMessage] = useState('');
+  const [signUpMessageType, setSignUpMessageType] = useState(''); // 'success' atau 'error'
+  const [signInMessage, setSignInMessage] = useState('');
+  const [signInMessageType, setSignInMessageType] = useState(''); // 'success' atau 'error'
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRegisterClick = () => setIsActive(true);
+  const handleLoginClick = () => setIsActive(false);
+
+  // Sign Up
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setSignUpMessage('');
+    setIsLoading(true);
+    
+    if (!name || !email || !password) {
+      setSignUpMessage('Lengkapi semua field!');
+      setSignUpMessageType('error');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await authService.register(name, email, password);
+      
+      setSignUpMessage('Registrasi berhasil! Silakan login dengan akun Anda.');
+      setSignUpMessageType('success');
+      
+      // Reset form dan kembali ke login form
+      setName('');
+      setEmail('');
+      setPassword('');
+      setTimeout(() => setIsActive(false), 1500); // kembali ke form login setelah 1.5 detik
+    } catch (error) {
+      setSignUpMessage(error.message || 'Registrasi gagal');
+      setSignUpMessageType('error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Sign In
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    setSignInMessage('');
+    setIsLoading(true);
+    
+    if (!name || !password) {
+      setSignInMessage('Lengkapi semua field!');
+      setSignInMessageType('error');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await authService.login(name, password);
+      
+      setSignInMessage('Login berhasil!');
+      setSignInMessageType('success');
+      
+      setTimeout(() => {
+        navigate('/');
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      setSignInMessage(error.message || 'Login gagal');
+      setSignInMessageType('error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="wrapper">
+      <div className={`container ${isActive ? 'active' : ''}`} id="container">
+        {/* Sign Up Form */}
+        <div className="form-container sign-up">
+          <form onSubmit={handleSignUp}>
+            <img height="100px" src={logo} alt="Recipe Logo" />
+            <h2>Buat Akun</h2>
+            <span>Daftar dengan Nama Pengguna, Email & Kata Sandi</span>
+            {signUpMessage && (
+              <div className={`message ${signUpMessageType}`}>
+                {signUpMessage}
+              </div>
+            )}
+            <input type="text" placeholder="Nama Pengguna" value={name} onChange={(e) => setName(e.target.value)} disabled={isLoading} />
+            <input type="email" placeholder="Masukkan Email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isLoading} />
+            <input type="password" placeholder="Masukkan Kata Sandi" value={password} onChange={(e) => setPassword(e.target.value)} disabled={isLoading} />
+            <button type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Sign Up'}</button>
+          </form>
+        </div>
+
+        {/* Sign In Form */}
+        <div className="form-container sign-in">
+          <form onSubmit={handleSignIn}>
+            <img height="100px" src={logo} alt="Recipe Logo" />
+            <h2>Sign In</h2>
+            <span>Masuk Dengan Nama Pengguna & Kata Sandi</span>
+            {signInMessage && (
+              <div className={`message ${signInMessageType}`}>
+                {signInMessage}
+              </div>
+            )}
+            <input type="text" placeholder="Nama Pengguna" value={name} onChange={(e) => setName(e.target.value)} disabled={isLoading} />
+            <input type="password" placeholder="Masukkan Kata Sandi" value={password} onChange={(e) => setPassword(e.target.value)} disabled={isLoading} />
+            <button type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Sign In'}</button>
+          </form>
+        </div>
+
+        {/* Toggle Container */}
+        <div className="toggle-container">
+          <div className="toggle">
+            <div className="toggle-panel toggle-left">
+              <h1>Selamat Datang</h1>
+              <p>Masuk Dengan Nama Pengguna & Kata Sandi</p>
+              <button className="hidden" onClick={handleLoginClick}>Sign In</button>
+            </div>
+            <div className="toggle-panel toggle-right">
+              <h1>SIGN UP</h1>
+              <p>Jika Kamu Belum Punya Akun Silakan Daftar Disini</p>
+              <button className="hidden" onClick={handleRegisterClick}>Sign Up</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginRegister;
+</file>
+
+<file path="src/services/authService.js">
+const API_URL = 'http://localhost:5010/api';
+
+const authService = {
+  // Register
+  register: async (name, email, password) => {
+    try {
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const data = await response.json();
+      // Simpan token ke localStorage
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Login
+  login: async (name, password) => {
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, password }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const data = await response.json();
+      // Simpan token ke localStorage
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Get current user
+  getCurrentUser: async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('Token tidak ditemukan');
+
+      const response = await fetch(`${API_URL}/auth/me`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal mengambil data user');
+      }
+
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Logout
+  logout: async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('Token tidak ditemukan');
+
+      const response = await fetch(`${API_URL}/auth/logout`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal logout');
+      }
+
+      // Hapus token dari localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Cek apakah user sudah login
+  isAuthenticated: () => {
+    return !!localStorage.getItem('token');
+  },
+
+  // Get token
+  getToken: () => {
+    return localStorage.getItem('token');
+  },
+};
+
+export default authService;
+</file>
+
+<file path="src/services/recipeService.js">
+// src/services/recipeService.js
+
+const API_URL = "http://localhost:5010/api";
+
+const getToken = () => localStorage.getItem("token");
+
+// Universal fetch wrapper
+const request = async (endpoint, method = "GET", body = null) => {
+  const token = getToken();
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const options = { method, headers };
+  if (body) options.body = JSON.stringify(body);
+
+  const res = await fetch(`${API_URL}${endpoint}`, options);
+
+  const text = await res.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!res.ok) {
+    throw new Error(data?.message || `HTTP ${res.status}`);
+  }
+
+  return data;
+};
+
+export const recipeService = {
+
+  // ================================
+  // RECIPES
+  // ================================
+  getAllRecipes: async () => {
+    const data = await request("/recipes");
+    return data.recipes;
+  },
+
+  getRecipeById: async (id) => {
+    const data = await request(`/recipes/${id}`);
+    return data.recipe;
+  },
+
+  createRecipe: async (recipe) => {
+    const data = await request("/recipes", "POST", recipe);
+    return data.recipe;
+  },
+
+  updateRecipe: async (id, recipe) => {
+    const data = await request(`/recipes/${id}`, "PUT", recipe);
+    return data.recipe;
+  },
+
+  deleteRecipe: async (id) => {
+    return await request(`/recipes/${id}`, "DELETE");
+  },
+
+  // ================================
+  // FAVORITES
+  // ================================
+  getFavorites: async () => {
+    const data = await request("/favorites");
+    return data.favorites;  // backend already returns: { favorites: [...] }
+  },
+
+  addToFavorites: async (recipeId) => {
+    return await request("/favorites", "POST", { recipeId });
+  },
+
+  removeFromFavorites: async (recipeId) => {
+    return await request(`/favorites/${recipeId}`, "DELETE");
+  },
+};
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+</file>
+
+</files>

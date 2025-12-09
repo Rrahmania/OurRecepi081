@@ -1,0 +1,14 @@
+# Render service configuration for the frontend (Vite static site)
+# Put this file in the frontend folder so Render can detect settings.
+services:
+  - type: static
+    name: just-anomaly-frontend
+    repo: ""
+    branch: main
+    root: .
+    buildCommand: "npm ci && npm run build"
+    publishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: "https://backend1001.onrender.com/api"
+        sync: false

@@ -1,0 +1,54 @@
+/* src/pages/Home.css */
+
+.home-page {
+    background-color: #F9F1E5; /* Background krem */
+    min-height: 100vh;
+}
+
+/* --- Section Resep Populer --- */
+.popular-recipes-section {
+    padding: 50px 7%; 
+    padding-bottom: 80px;
+}
+
+.popular-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title {
+    color: #DB944B; /* Warna oranye/cokelat */
+    font-size: 2.8em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 1.1em;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Layout Grid untuk RecipeCard: 3 kolom di desktop */
+.popular-recipes-grid {
+    display: grid; 
+    /* Gunakan 3 kolom yang sama lebar di desktop */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+}
+
+/* Responsivitas Mobile */
+@media (max-width: 1024px) {
+    .popular-recipes-grid {
+        /* Beralih ke 2 kolom di tablet */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (max-width: 600px) {
+    .popular-recipes-grid {
+        /* Beralih ke 1 kolom di HP */
+        grid-template-columns: 1fr; 
+    }
+}
