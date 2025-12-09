@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { calculateAverageRating } from '../utils/ratingUtils';
 import { recipeService } from '../services/recipeService';
 import { isUserRecipe, deleteRecipe } from '../utils/recipeUtils';
-import './RecipeCard.css';
+import './Recipecard.css';
 
 const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
   // Support both legacy local recipe shape (name, categories, bahan, langkah)
@@ -178,3 +178,4 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
 };
 
 export default RecipeCard;
+
