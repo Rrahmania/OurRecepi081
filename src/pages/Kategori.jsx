@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { initialRecipes, categories } from '../data/resep'; 
 import RecipeCard from '../components/RecipeCard'; // Gunakan RecipeCard yang sudah diperbaiki
-import { recipeService } from '../services/recipeService';
 import './Kategori.css'; 
 import cari from '../assets/cari.png'; 
 
@@ -13,24 +12,7 @@ const Kategori = () => {
   const [ratingVersion, setRatingVersion] = useState(0);
 
   useEffect(() => {
-    const loadRecipes = async () => {
-      // Try API first
-      try {
-        const serverRecipes = await recipeService.getAllRecipes();
-        if (Array.isArray(serverRecipes) && serverRecipes.length > 0) {
-          // normalize server shape so category filtering works
-          const normalized = serverRecipes.map(r => ({
-            ...r,
-            categories: r.categories || (r.category ? [r.category] : []),
-            name: r.name || r.title,
-          }));
-          setAllRecipes(normalized);
-          return;
-        }
-      } catch (err) {
-        console.warn('Failed to load recipes from API, falling back to localStorage:', err.message);
-      }
-
+    const loadRecipes = () => {
       try {
         const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
         setAllRecipes([...initialRecipes, ...savedRecipes]);
@@ -39,7 +21,7 @@ const Kategori = () => {
         setAllRecipes(initialRecipes);
       }
     };
-
+    
     loadRecipes();
     
     const handleRatingUpdated = () => {
