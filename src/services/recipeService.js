@@ -1,6 +1,8 @@
 // src/services/recipeService.js
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5010/api";
+// Debug helper: log resolved API URL at module load so it's visible in browser console
+console.info('[recipeService] Resolved API_URL =', API_URL);
 
 const getToken = () => localStorage.getItem("token");
 
