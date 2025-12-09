@@ -106,9 +106,14 @@ export const recipeService = {
   addToFavorites: async (recipeId) => {
     return await request("/favorites", "POST", { recipeId });
   },
-
   removeFromFavorites: async (recipeId) => {
     return await request(`/favorites/${recipeId}`, "DELETE");
+  },
+
+  // Check if current user has favorited a recipe (requires auth)
+  isFavorite: async (recipeId) => {
+    const data = await request(`/favorites/check/${recipeId}`);
+    return data; // { isFavorite: boolean }
   },
 };
 
