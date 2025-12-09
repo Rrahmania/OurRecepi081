@@ -137,14 +137,7 @@ const RecipeForm = () => {
         image: imageBase64 || '',
       };
 
-      // Require authentication to save to server. If no token, prompt user to login.
-      const token = localStorage.getItem('token');
-      if (!token) {
-        alert('Untuk menyimpan resep ke server, silakan login terlebih dahulu. Anda akan dialihkan ke halaman login.');
-        window.location.href = '/login';
-        setLoading(false);
-        return;
-      }
+      // NOTE: Server accepts public recipe creation. We allow creating without login.
 
       let createdRecipe = null;
       try {
@@ -160,7 +153,31 @@ const RecipeForm = () => {
         return;
       }
 
-      // 4. Reset form
+      // 4. Persist to localStorage so category page (which reads localStorage) shows the recipe
+      try {
+        const saved = JSON.parse(localStorage.getItem('recipes')) || [];
+        const created = createdRecipe || {};
+        const localRecipe = {
+          id: created.id || newRecipe.id,
+          name: created.title || newRecipe.name,
+          categories: created.category ? [created.category] : (newRecipe.categories || []),
+          image: created.image || newRecipe.image || '',
+          bahan: Array.isArray(created.ingredients)
+            ? created.ingredients.map(i => `- ${i}`).join('\n')
+            : (created.ingredients || newRecipe.bahan),
+          langkah: created.instructions || newRecipe.langkah,
+          createdAt: created.createdAt || new Date().toISOString()
+        };
+
+        saved.push(localRecipe);
+        localStorage.setItem('recipes', JSON.stringify(saved));
+        // Trigger other listeners (Kategori listens to 'storage' to reload)
+        try { window.dispatchEvent(new Event('storage')); } catch (e) { /* ignore */ }
+      } catch (e) {
+        console.warn('Could not persist recipe to localStorage:', e);
+      }
+
+      // 5. Reset form
       setFormData({
         title: '', description: '', ingredients: [''], steps: [''], categories: [], image: null
       });
