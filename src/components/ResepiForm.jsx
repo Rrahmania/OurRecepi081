@@ -137,15 +137,25 @@ const RecipeForm = () => {
         image: imageBase64 || '',
       };
 
+      // Require authentication to save to server. If no token, prompt user to login.
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Untuk menyimpan resep ke server, silakan login terlebih dahulu. Anda akan dialihkan ke halaman login.');
+        window.location.href = '/login';
+        setLoading(false);
+        return;
+      }
+
       let createdRecipe = null;
       try {
         createdRecipe = await recipeService.createRecipe(payload);
       } catch (apiError) {
-        // If create fails (e.g. user not authenticated), show error and fall back to local save
+        // If create fails despite having token, show clear error and do NOT silently save locally
         console.error('API createRecipe error:', apiError);
-        alert('Gagal menyimpan ke server. Menyimpan lokal sebagai cadangan. (Pastikan Anda login)');
-        const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
-        localStorage.setItem('recipes', JSON.stringify([...existingRecipes, newRecipe]));
+        const msg = apiError?.message || 'Gagal menyimpan resep ke server.';
+        alert(`Gagal menyimpan ke server: ${msg}`);
+        setLoading(false);
+        return;
       }
 
       // 4. Reset form
@@ -156,8 +166,8 @@ const RecipeForm = () => {
       // 5. Tampilkan alert & redirect
       alert('Resep berhasil ditambahkan!');
 
-      // 6. Redirect ke halaman detail (use createdRecipe id if available, otherwise local id)
-      const targetId = createdRecipe?.recipe?.id || newRecipe.id;
+      // 6. Redirect ke halaman detail (backend returns created recipe object)
+      const targetId = createdRecipe?.id || newRecipe.id;
       window.location.href = `/resep/${targetId}`;
       
     } catch (error) {
