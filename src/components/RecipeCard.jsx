@@ -5,13 +5,13 @@ import { isUserRecipe, deleteRecipe } from '../utils/recipeUtils';
 import './Recipecard.css';
 
 const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
-  const {
-    id,
-    name,
-    categories,
-    rating: defaultRating,
-    image 
-  } = recipe;
+  // Support both legacy local recipe shape (name, categories, bahan, langkah)
+  // and backend recipe shape (title, category, ingredients, instructions)
+  const id = recipe.id;
+  const name = recipe.name || recipe.title || 'Untitled';
+  const categories = recipe.categories || (recipe.category ? [recipe.category] : []);
+  const defaultRating = recipe.rating || 0;
+  const image = recipe.image || '';
 
   const navigate = useNavigate(); // Untuk navigasi
   const [currentRating, setCurrentRating] = useState(0);
@@ -142,6 +142,5 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
     </div>
   );
 };
-
 
 export default RecipeCard;
