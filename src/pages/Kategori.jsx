@@ -15,13 +15,32 @@ const Kategori = () => {
     const loadRecipes = () => {
       try {
         const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
-        setAllRecipes([...initialRecipes, ...savedRecipes]);
+
+        // Normalize each recipe so we always have: id, name, categories (array), image, bahan/langkah or ingredients/instructions
+        const normalize = (r) => {
+          const id = r.id;
+          const name = r.name || r.title || 'Untitled';
+          const categories = r.categories && Array.isArray(r.categories)
+            ? r.categories
+            : (r.category ? [r.category] : []);
+          const image = r.image || '';
+          return { ...r, id, name, categories, image };
+        };
+
+        const normalizedInitial = initialRecipes.map(normalize);
+        const normalizedSaved = savedRecipes.map(normalize);
+
+        setAllRecipes([...normalizedInitial, ...normalizedSaved]);
       } catch (error) {
         console.error('Error loading recipes:', error);
-        setAllRecipes(initialRecipes);
+        setAllRecipes(initialRecipes.map(r => ({
+          ...r,
+          name: r.name || r.title || 'Untitled',
+          categories: r.categories || (r.category ? [r.category] : [])
+        })));
       }
     };
-    
+
     loadRecipes();
     
     const handleRatingUpdated = () => {
