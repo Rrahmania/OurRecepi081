@@ -28,8 +28,13 @@ const DetailResep = () => {
                 const apiRecipe = await recipeService.getRecipeById(id);
                         if (apiRecipe) {
                                         setRecipe(apiRecipe);
-                                        // if recipe came from server, it's likely not a local user recipe
-                                        setIsUserRecipe(false);
+                                                                // If recipe came from server, determine ownership by comparing user id
+                                                                const userObj = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+                                                                if (apiRecipe && apiRecipe.userId && userObj && String(apiRecipe.userId) === String(userObj.id)) {
+                                                                    setIsUserRecipe(true);
+                                                                } else {
+                                                                    setIsUserRecipe(false);
+                                                                }
                                         // also try to set favorite status from localStorage if exists
                                         const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
                                         setIsFavorite(storedFav);
