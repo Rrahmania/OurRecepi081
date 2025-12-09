@@ -165,7 +165,7 @@ const DetailResep = () => {
         })();
     };
 
-    const handleDeleteRecipe = () => {
+    const handleDeleteRecipe = async () => {
         if (!isUserLoggedIn()) {
             alert("Anda harus login untuk menghapus resep!");
             navigate('/login');
@@ -177,28 +177,41 @@ const DetailResep = () => {
         }
 
         try {
-            // Ambil resep dari localStorage
-            const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
-            
-            // Filter out resep yang ingin dihapus
-            const updatedRecipes = savedRecipes.filter(r => 
-                r.id !== recipe.id && r.id.toString() !== id
-            );
-            
-            // Simpan kembali ke localStorage
-            localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
-            
-            // Hapus juga data rating dan favorit untuk resep ini
-            localStorage.removeItem(`recipe-${id}-rating`);
-            localStorage.removeItem(`recipe-${id}-favorite`);
-            
-            // Trigger event untuk update tampilan
-            window.dispatchEvent(new Event('storage'));
-            window.dispatchEvent(new Event('ratingUpdated'));
-            
-            // Redirect ke halaman kategori
-            alert("Resep berhasil dihapus!");
-            navigate('/kategori');
+                        // If recipe is server-side (UUID) and user is logged in, try to delete on server
+                        const isUuidV4 = (str) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
+                        const token = localStorage.getItem('token');
+
+                        if (isUuidV4(id) && token) {
+                            try {
+                                await recipeService.deleteRecipe(id);
+                                // also remove any local copy
+                                const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+                                const updatedRecipes = savedRecipes.filter(r => r.id !== recipe.id && r.id.toString() !== id);
+                                localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+                                localStorage.removeItem(`recipe-${id}-rating`);
+                                localStorage.removeItem(`recipe-${id}-favorite`);
+                                window.dispatchEvent(new Event('storage'));
+                                window.dispatchEvent(new Event('ratingUpdated'));
+                                alert('Resep berhasil dihapus dari server');
+                                navigate('/kategori');
+                                return;
+                            } catch (err) {
+                                console.error('Failed to delete recipe on server, falling back to local delete:', err);
+                                alert('Gagal menghapus dari server, akan mencoba menghapus lokal saja');
+                                // fallthrough to local deletion
+                            }
+                        }
+
+                        // Local delete (fallback)
+                        const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+                        const updatedRecipes = savedRecipes.filter(r => r.id !== recipe.id && r.id.toString() !== id);
+                        localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+                        localStorage.removeItem(`recipe-${id}-rating`);
+                        localStorage.removeItem(`recipe-${id}-favorite`);
+                        window.dispatchEvent(new Event('storage'));
+                        window.dispatchEvent(new Event('ratingUpdated'));
+                        alert('Resep berhasil dihapus!');
+                        navigate('/kategori');
             
         } catch (error) {
             console.error('Error deleting recipe:', error);
