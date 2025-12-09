@@ -47,9 +47,6 @@ const request = async (endpoint, method = "GET", body = null) => {
 
 export const recipeService = {
 
-  // ================================
-  // RECIPES
-  // ================================
   getAllRecipes: async () => {
     const data = await request("/recipes");
     return data.recipes;
@@ -74,9 +71,6 @@ export const recipeService = {
     return await request(`/recipes/${id}`, "DELETE");
   },
 
-  // ================================
-  // RATINGS
-  // ================================
   // Get ratings and average for a recipe
   getRatings: async (recipeId) => {
     const data = await request(`/ratings/${recipeId}`);
@@ -95,9 +89,7 @@ export const recipeService = {
     return data;
   },
 
-  // ================================
-  // FAVORITES
-  // ================================
+
   getFavorites: async () => {
     const data = await request("/favorites");
     return data.favorites;  // backend already returns: { favorites: [...] }
@@ -106,14 +98,15 @@ export const recipeService = {
   addToFavorites: async (recipeId) => {
     return await request("/favorites", "POST", { recipeId });
   },
+
   removeFromFavorites: async (recipeId) => {
     return await request(`/favorites/${recipeId}`, "DELETE");
   },
-
-  // Check if current user has favorited a recipe (requires auth)
+  
+  // Check if current user has favorited a recipe
   isFavorite: async (recipeId) => {
     const data = await request(`/favorites/check/${recipeId}`);
-    return data; // { isFavorite: boolean }
+    return data?.isFavorite || false;
   },
 };
 
