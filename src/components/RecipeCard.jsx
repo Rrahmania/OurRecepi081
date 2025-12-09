@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Tambahkan useNavigate
 import { calculateAverageRating } from '../utils/ratingUtils';
+import { recipeService } from '../services/recipeService';
 import { isUserRecipe, deleteRecipe } from '../utils/recipeUtils';
-import './Recipecard.css';
+import './RecipeCard.css';
 
 const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
-  // Support both legacy local recipe shape (name, categories, bahan, langkah)
-  // and backend recipe shape (title, category, ingredients, instructions)
   const id = recipe.id;
   const name = recipe.name || recipe.title || 'Untitled';
   const categories = recipe.categories || (recipe.category ? [recipe.category] : []);
@@ -23,9 +22,22 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
     const deletable = isUserRecipe(id);
     setIsDeletable(deletable);
     
-    // Update rating
-    const rating = calculateAverageRating(id, defaultRating || 0);
-    setCurrentRating(rating);
+    // Update rating: prefer server average when available, fallback to local calculation
+    let mounted = true;
+    (async () => {
+      try {
+        const r = await recipeService.getRatings(id);
+        if (mounted && r && typeof r.average === 'number') {
+          setCurrentRating(r.average);
+        } else if (mounted) {
+          const rating = calculateAverageRating(id, defaultRating || 0);
+          setCurrentRating(rating);
+        }
+      } catch (err) {
+        const rating = calculateAverageRating(id, defaultRating || 0);
+        if (mounted) setCurrentRating(rating);
+      }
+    })();
     
     // Listen for rating updates
     const handleRatingUpdated = () => {
@@ -37,6 +49,7 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
     
     return () => {
       window.removeEventListener('ratingUpdated', handleRatingUpdated);
+      mounted = false;
     };
   }, [id, defaultRating]);
 
