@@ -1,4 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5010/api";
+// Debug helper: log resolved API URL at module load so it's visible in browser console
 console.info('[recipeService] Resolved API_URL =', API_URL);
 
 const getToken = () => localStorage.getItem("token");
@@ -46,6 +47,9 @@ const request = async (endpoint, method = "GET", body = null) => {
 
 export const recipeService = {
 
+  // ================================
+  // RECIPES
+  // ================================
   getAllRecipes: async () => {
     const data = await request("/recipes");
     return data.recipes;
@@ -70,6 +74,10 @@ export const recipeService = {
     return await request(`/recipes/${id}`, "DELETE");
   },
 
+  // ================================
+  // RATINGS
+  // ================================
+  // Get ratings and average for a recipe
   getRatings: async (recipeId) => {
     const data = await request(`/ratings/${recipeId}`);
     return data; // { average, count, ratings }
@@ -87,6 +95,9 @@ export const recipeService = {
     return data;
   },
 
+  // ================================
+  // FAVORITES
+  // ================================
   getFavorites: async () => {
     const data = await request("/favorites");
     return data.favorites;  // backend already returns: { favorites: [...] }
@@ -100,3 +111,6 @@ export const recipeService = {
     return await request(`/favorites/${recipeId}`, "DELETE");
   },
 };
+
+// Provide a default export for compatibility with different import styles
+export default recipeService;
