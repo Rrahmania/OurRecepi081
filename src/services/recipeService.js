@@ -37,6 +37,8 @@ const request = async (endpoint, method = "GET", body = null) => {
   }
 
   if (!res.ok) {
+    // Log full details to help debugging in browser console
+    console.error('[recipeService] API error response:', { status: res.status, statusText: res.statusText, body: data, rawText: text });
     // Prefer server-provided message, otherwise include status
     const msg = data?.message || `HTTP ${res.status}`;
     throw new Error(msg);
