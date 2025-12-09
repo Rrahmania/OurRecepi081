@@ -148,6 +148,8 @@ const RecipeForm = () => {
 
       let createdRecipe = null;
       try {
+        // Debug: log payload sent to API
+        console.debug('Creating recipe payload:', payload);
         createdRecipe = await recipeService.createRecipe(payload);
       } catch (apiError) {
         // If create fails despite having token, show clear error and do NOT silently save locally
