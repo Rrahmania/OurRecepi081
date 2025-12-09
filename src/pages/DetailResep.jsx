@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { initialRecipes } from '../data/resep';
+import { recipeService } from '../services/recipeService';
 import { saveRecipeRating, getRecipeRating } from '../utils/ratingUtils';
 import './DetailResep.css';
 
@@ -19,28 +20,51 @@ const DetailResep = () => {
     };
 
     useEffect(() => {
-        const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
-        const allRecipes = [...initialRecipes, ...savedRecipes];
-        
-        const recipeId = parseInt(id);
-        const foundRecipe = allRecipes.find(r => r.id === recipeId || r.id.toString() === id);
-        setRecipe(foundRecipe);
-        
-        // Cek apakah resep ini milik user (dari localStorage)
-        const isFromUser = savedRecipes.some(r => r.id === recipeId || r.id.toString() === id);
-        setIsUserRecipe(isFromUser);
-        
-        // Ambil status favorit
-        const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
-        setIsFavorite(storedFav);
-        
-        // Ambil rating user dari localStorage
-        const storedUserRating = getRecipeRating(id);
-        if (storedUserRating !== null) {
-            setUserRating(storedUserRating);
-        }
-        
-        setLoading(false);
+        const load = async () => {
+            // Try load from API first
+            try {
+                const apiRecipe = await recipeService.getRecipeById(id);
+                if (apiRecipe) {
+                    setRecipe(apiRecipe);
+                    // if recipe came from server, it's likely not a local user recipe
+                    setIsUserRecipe(false);
+                    // also try to set favorite status from localStorage if exists
+                    const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
+                    setIsFavorite(storedFav);
+                    const storedUserRating = getRecipeRating(id);
+                    if (storedUserRating !== null) setUserRating(storedUserRating);
+                    setLoading(false);
+                    return;
+                }
+            } catch (err) {
+                console.warn('Failed to load recipe from API, falling back to localStorage:', err.message);
+            }
+
+            // Fallback to localStorage + initialRecipes
+            const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            const allRecipes = [...initialRecipes, ...savedRecipes];
+            const recipeId = parseInt(id);
+            const foundRecipe = allRecipes.find(r => r.id === recipeId || r.id.toString() === id);
+            setRecipe(foundRecipe);
+
+            // Cek apakah resep ini milik user (dari localStorage)
+            const isFromUser = savedRecipes.some(r => r.id === recipeId || r.id.toString() === id);
+            setIsUserRecipe(isFromUser);
+
+            // Ambil status favorit
+            const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
+            setIsFavorite(storedFav);
+
+            // Ambil rating user dari localStorage
+            const storedUserRating = getRecipeRating(id);
+            if (storedUserRating !== null) {
+                setUserRating(storedUserRating);
+            }
+
+            setLoading(false);
+        };
+
+        load();
     }, [id]);
 
     const toggleFavorite = () => {
@@ -174,10 +198,25 @@ const DetailResep = () => {
                 />
                 
                 <div className="detail-info">
+                    {/* Normalize fields between backend and local shapes */}
+                    {(() => {
+                        // compute normalized values
+                        const displayName = recipe.name || recipe.title || 'Untitled';
+                        const displayCategories = Array.isArray(recipe.categories)
+                            ? recipe.categories
+                            : (recipe.category ? [recipe.category] : []);
+                        const ingredientsArray = Array.isArray(recipe.ingredients)
+                            ? recipe.ingredients
+                            : (recipe.bahan ? recipe.bahan.split('\n').map(s => s.trim()).filter(Boolean) : []);
+                        const instructionsText = recipe.instructions || recipe.langkah || '';
+
+                        // Attach to recipe for downstream JSX readability via closure
+                        recipe._display = { displayName, displayCategories, ingredientsArray, instructionsText };
+                    })()}
                     
                     <div className="header-info">
                         <div style={{display: 'flex', alignItems: 'center', gap: '15px'}}>
-                            <h2>{recipe.name}</h2>
+                            <h2>{recipe._display?.displayName || recipe.name}</h2>
                             {isUserRecipe && (
                                 <button 
                                     onClick={handleDeleteRecipe} 
@@ -202,7 +241,7 @@ const DetailResep = () => {
                     </div>
 
                     <div className="metadata">
-                        <p>Kategori: <strong>{Array.isArray(recipe.categories) ? recipe.categories.join(', ') : recipe.categories}</strong></p>
+                        <p>Kategori: <strong>{(recipe._display?.displayCategories || []).join(', ')}</strong></p>
                         {userRating > 0 && (
                             <p>
                                 <strong>Rating Anda:</strong> {renderRatingDisplay(userRating)}
@@ -218,9 +257,9 @@ const DetailResep = () => {
                     <div className="bahan-bahan">
                         <h3>Bahan - bahan:</h3>
                         <div className="ingredients-content">
-                            {recipe.bahan ? (
-                                recipe.bahan.split('\n').map((line, index) => (
-                                    line.trim() && <div key={index} className="ingredient-item">{line}</div>
+                            {recipe._display?.ingredientsArray && recipe._display.ingredientsArray.length > 0 ? (
+                                recipe._display.ingredientsArray.map((line, index) => (
+                                    <div key={index} className="ingredient-item">{line}</div>
                                 ))
                             ) : (
                                 <p>Belum ada bahan yang ditambahkan</p>
@@ -231,8 +270,8 @@ const DetailResep = () => {
                     <div className="langkah-langkah">
                         <h3>Langkah - langkah:</h3>
                         <div className="steps-content">
-                            {recipe.langkah ? (
-                                recipe.langkah.split('\n').map((line, index) => (
+                            {recipe._display?.instructionsText ? (
+                                recipe._display.instructionsText.split('\n').map((line, index) => (
                                     line.trim() && <div key={index} className="step-item">{line}</div>
                                 ))
                             ) : (
