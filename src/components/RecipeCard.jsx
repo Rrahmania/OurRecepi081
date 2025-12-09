@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Tambahkan useNavigate
 import { calculateAverageRating } from '../utils/ratingUtils';
 import { isUserRecipe, deleteRecipe } from '../utils/recipeUtils';
-import './RecipeCard.css';
+import './Recipecard.css';
 
 const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
   const {
@@ -142,5 +142,6 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
     </div>
   );
 };
+
 
 export default RecipeCard;
