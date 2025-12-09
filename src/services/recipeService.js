@@ -1,4 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5010/api";
+// Debug helper: log resolved API URL at module load so it's visible in browser console
 console.info('[recipeService] Resolved API_URL =', API_URL);
 
 const getToken = () => localStorage.getItem("token");
@@ -46,6 +47,9 @@ const request = async (endpoint, method = "GET", body = null) => {
 
 export const recipeService = {
 
+  // ================================
+  // RECIPES
+  // ================================
   getAllRecipes: async () => {
     const data = await request("/recipes");
     return data.recipes;
@@ -61,33 +65,6 @@ export const recipeService = {
     return data.recipe;
   },
 
-  // Create recipe via FormData (multipart) — do not set JSON headers
-  createRecipeForm: async (formData) => {
-    const token = getToken();
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-
-    const res = await fetch(`${API_URL}/recipes`, {
-      method: 'POST',
-      headers,
-      body: formData,
-    });
-
-    const text = await res.text();
-    let data = null;
-    if (text) {
-      try { data = JSON.parse(text); } catch (err) { throw new Error(`Unable to parse JSON response (status ${res.status}): ${text}`); }
-    }
-
-    if (!res.ok) {
-      console.error('[recipeService] API error response (form):', { status: res.status, body: data, rawText: text });
-      const msg = data?.message || `HTTP ${res.status}`;
-      throw new Error(msg);
-    }
-
-    return data.recipe;
-  },
-
   updateRecipe: async (id, recipe) => {
     const data = await request(`/recipes/${id}`, "PUT", recipe);
     return data.recipe;
@@ -97,7 +74,7 @@ export const recipeService = {
     return await request(`/recipes/${id}`, "DELETE");
   },
 
-  // Get ratings and average for a recipe
+
   getRatings: async (recipeId) => {
     const data = await request(`/ratings/${recipeId}`);
     return data; // { average, count, ratings }
@@ -114,6 +91,7 @@ export const recipeService = {
     const data = await request(`/ratings/${recipeId}`, "DELETE");
     return data;
   },
+
 
   getFavorites: async () => {
     const data = await request("/favorites");
