@@ -22,10 +22,22 @@ const request = async (endpoint, method = "GET", body = null) => {
   const res = await fetch(`${API_URL}${endpoint}`, options);
 
   const text = await res.text();
-  const data = text ? JSON.parse(text) : null;
+  let data = null;
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch (err) {
+      // Include raw response text for easier debugging
+      const errMsg = `Unable to parse JSON response (status ${res.status}): ${text}`;
+      console.error(errMsg);
+      throw new Error(errMsg);
+    }
+  }
 
   if (!res.ok) {
-    throw new Error(data?.message || `HTTP ${res.status}`);
+    // Prefer server-provided message, otherwise include status
+    const msg = data?.message || `HTTP ${res.status}`;
+    throw new Error(msg);
   }
 
   return data;
