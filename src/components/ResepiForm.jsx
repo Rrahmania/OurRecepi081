@@ -1,5 +1,6 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './ResepiForm.css';
+import { recipeService } from '../services/recipeService';
 
 const RecipeForm = () => { 
   const [formData, setFormData] = useState({
@@ -124,21 +125,40 @@ const RecipeForm = () => {
         createdAt: new Date().toISOString()
       };
 
-      // 3. Simpan ke localStorage
-      const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
-      localStorage.setItem('recipes', JSON.stringify([...existingRecipes, newRecipe]));
+      // 3. Send to backend (requires authentication). Backend expects fields:
+      // title, description, category, ingredients, instructions, image
+      // Use the first selected category as `category` (backend expects single category)
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        category: formData.categories[0] || 'Lainnya',
+        ingredients: formData.ingredients.filter(ing => ing.trim() !== ''),
+        instructions: formData.steps.filter(step => step.trim() !== '').join('\n'),
+        image: imageBase64 || '',
+      };
+
+      let createdRecipe = null;
+      try {
+        createdRecipe = await recipeService.createRecipe(payload);
+      } catch (apiError) {
+        // If create fails (e.g. user not authenticated), show error and fall back to local save
+        console.error('API createRecipe error:', apiError);
+        alert('Gagal menyimpan ke server. Menyimpan lokal sebagai cadangan. (Pastikan Anda login)');
+        const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+        localStorage.setItem('recipes', JSON.stringify([...existingRecipes, newRecipe]));
+      }
 
       // 4. Reset form
       setFormData({
         title: '', description: '', ingredients: [''], steps: [''], categories: [], image: null
       });
       setImagePreview(null);
-
       // 5. Tampilkan alert & redirect
       alert('Resep berhasil ditambahkan!');
-      
-      // 6. Redirect ke halaman detail resep
-      window.location.href = `/resep/${newRecipe.id}`;
+
+      // 6. Redirect ke halaman detail (use createdRecipe id if available, otherwise local id)
+      const targetId = createdRecipe?.recipe?.id || newRecipe.id;
+      window.location.href = `/resep/${targetId}`;
       
     } catch (error) {
       console.error('Error saving recipe:', error);
