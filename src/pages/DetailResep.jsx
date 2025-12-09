@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { initialRecipes } from '../data/resep';
 import { recipeService } from '../services/recipeService';
-import { saveRecipeRating, getRecipeRating } from '../utils/ratingUtils';
+import { getRecipeRating } from '../utils/ratingUtils';
+import { recipeService } from '../services/recipeService';
 import './DetailResep.css';
 
 const DetailResep = () => {
@@ -13,6 +14,8 @@ const DetailResep = () => {
     const [loading, setLoading] = useState(true);
     const [isFavorite, setIsFavorite] = useState(false);
     const [userRating, setUserRating] = useState(0);
+    const [averageRating, setAverageRating] = useState(0);
+    const [ratingCount, setRatingCount] = useState(0);
     const [isUserRecipe, setIsUserRecipe] = useState(false);
 
     const isUserLoggedIn = () => {
@@ -24,18 +27,36 @@ const DetailResep = () => {
             // Try load from API first
             try {
                 const apiRecipe = await recipeService.getRecipeById(id);
-                if (apiRecipe) {
-                    setRecipe(apiRecipe);
-                    // if recipe came from server, it's likely not a local user recipe
-                    setIsUserRecipe(false);
-                    // also try to set favorite status from localStorage if exists
-                    const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
-                    setIsFavorite(storedFav);
-                    const storedUserRating = getRecipeRating(id);
-                    if (storedUserRating !== null) setUserRating(storedUserRating);
-                    setLoading(false);
-                    return;
-                }
+                        if (apiRecipe) {
+                                        setRecipe(apiRecipe);
+                                        // if recipe came from server, it's likely not a local user recipe
+                                        setIsUserRecipe(false);
+                                        // also try to set favorite status from localStorage if exists
+                                        const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
+                                        setIsFavorite(storedFav);
+
+                                        // Fetch ratings/average from server
+                                        try {
+                                            const rdata = await recipeService.getRatings(id);
+                                            if (rdata) {
+                                                setAverageRating(rdata.average || 0);
+                                                setRatingCount(rdata.count || 0);
+                                                // if user is logged in, attempt to find their rating
+                                                const userObj = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+                                                if (userObj && Array.isArray(rdata.ratings)) {
+                                                    const my = rdata.ratings.find(rt => rt.user && String(rt.user.id) === String(userObj.id));
+                                                    if (my) setUserRating(my.score);
+                                                }
+                                            }
+                                        } catch (err) {
+                                            console.warn('Failed to load ratings from server:', err?.message || err);
+                                            const storedUserRating = getRecipeRating(id);
+                                            if (storedUserRating !== null) setUserRating(storedUserRating);
+                                        }
+
+                                        setLoading(false);
+                                        return;
+                                }
             } catch (err) {
                 console.warn('Failed to load recipe from API, falling back to localStorage:', err.message);
             }
@@ -86,13 +107,32 @@ const DetailResep = () => {
             navigate('/login');
             return;
         }
-
-        // Simpan rating ke localStorage
-        saveRecipeRating(id, rate);
-        setUserRating(rate);
-        
-        // Trigger event untuk update komponen lain
-        window.dispatchEvent(new Event('ratingUpdated'));
+                // Send rating to server (upsert)
+                (async () => {
+                    try {
+                        const payload = { recipeId: id, score: rate, comment: '' };
+                        await recipeService.upsertRating(payload);
+                        // refresh averages
+                        const rdata = await recipeService.getRatings(id);
+                        if (rdata) {
+                            setAverageRating(rdata.average || 0);
+                            setRatingCount(rdata.count || 0);
+                            // find user's rating
+                            const userObj = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+                            if (userObj && Array.isArray(rdata.ratings)) {
+                                const my = rdata.ratings.find(rt => rt.user && String(rt.user.id) === String(userObj.id));
+                                if (my) setUserRating(my.score);
+                            } else {
+                                setUserRating(rate);
+                            }
+                        }
+                        // Notify other components
+                        window.dispatchEvent(new CustomEvent('ratingUpdated', { detail: { recipeId: id, average: rdata?.average, count: rdata?.count } }));
+                    } catch (err) {
+                        console.error('Error submitting rating:', err);
+                        alert('Gagal mengirim rating. Silakan coba lagi.');
+                    }
+                })();
     };
 
     const handleDeleteRecipe = () => {
@@ -242,11 +282,14 @@ const DetailResep = () => {
 
                     <div className="metadata">
                         <p>Kategori: <strong>{(recipe._display?.displayCategories || []).join(', ')}</strong></p>
-                        {userRating > 0 && (
-                            <p>
-                                <strong>Rating Anda:</strong> {renderRatingDisplay(userRating)}
-                            </p>
-                        )}
+                                                <div>
+                                                    <p><strong>Rata-rata:</strong> {renderRatingDisplay(averageRating)} {ratingCount ? <small>({ratingCount} penilai)</small> : null}</p>
+                                                    {userRating > 0 && (
+                                                        <p>
+                                                                <strong>Rating Anda:</strong> {renderRatingDisplay(userRating)}
+                                                        </p>
+                                                    )}
+                                                </div>
                     </div>
 
                     <div className="description">
