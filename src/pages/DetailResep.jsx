@@ -31,8 +31,20 @@ const DetailResep = () => {
                                         // if recipe came from server, it's likely not a local user recipe
                                         setIsUserRecipe(false);
                                         // also try to set favorite status from localStorage if exists
-                                        const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
-                                        setIsFavorite(storedFav);
+                                                                                const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
+                                                                                setIsFavorite(storedFav);
+
+                                                                                // If logged in, check server-side favorite status and prefer it
+                                                                                if (localStorage.getItem('token')) {
+                                                                                    try {
+                                                                                        const favResp = await recipeService.isFavorite(id);
+                                                                                        if (favResp && typeof favResp.isFavorite === 'boolean') {
+                                                                                            setIsFavorite(favResp.isFavorite);
+                                                                                        }
+                                                                                    } catch (e) {
+                                                                                        console.warn('Could not verify favorite status from server:', e?.message || e);
+                                                                                    }
+                                                                                }
 
                                         // Fetch ratings/average from server
                                         try {
@@ -93,11 +105,26 @@ const DetailResep = () => {
             navigate('/login');
             return;
         }
-
-        const newFavStatus = !isFavorite;
-        setIsFavorite(newFavStatus);
-        localStorage.setItem(`recipe-${id}-favorite`, newFavStatus);
-        window.dispatchEvent(new Event('storage'));
+                (async () => {
+                    try {
+                        if (!isFavorite) {
+                            // add favorite on server
+                            await recipeService.addToFavorites(id);
+                            setIsFavorite(true);
+                            localStorage.setItem(`recipe-${id}-favorite`, 'true');
+                        } else {
+                            // remove favorite on server
+                            await recipeService.removeFromFavorites(id);
+                            setIsFavorite(false);
+                            localStorage.setItem(`recipe-${id}-favorite`, 'false');
+                        }
+                        // notify other parts of app
+                        window.dispatchEvent(new Event('storage'));
+                    } catch (err) {
+                        console.error('Error toggling favorite:', err);
+                        alert('Gagal memperbarui favorit. Silakan coba lagi.');
+                    }
+                })();
     };
 
     const handleRating = (rate) => {
