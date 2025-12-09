@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Tambahkan useNavigate
 import { calculateAverageRating } from '../utils/ratingUtils';
 import { recipeService } from '../services/recipeService';
 import { isUserRecipe, deleteRecipe } from '../utils/recipeUtils';
@@ -21,7 +21,17 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
 
   useEffect(() => {
     // Cek apakah resep ini bisa dihapus (buatan user)
-    const deletable = isUserRecipe(id);
+    const deletableLocal = isUserRecipe(id);
+    let deletable = deletableLocal;
+    try {
+      const userObj = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+      // If recipe looks like a server object and has userId, consider it deletable when user matches
+      if (!deletable && recipe && recipe.userId && userObj && String(recipe.userId) === String(userObj.id)) {
+        deletable = true;
+      }
+    } catch (err) {
+      console.warn('Error checking server ownership for deletable:', err);
+    }
     setIsDeletable(deletable);
     
     // Update rating: prefer server average when available, fallback to local calculation
@@ -178,4 +188,3 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
 };
 
 export default RecipeCard;
-
