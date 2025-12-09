@@ -100,22 +100,53 @@ const RecipeForm = () => {
     }
     
     try {
-      // Use multipart FormData upload (supports large images)
-      const form = new FormData();
-      form.append('title', formData.title);
-      form.append('description', formData.description);
-      form.append('category', formData.categories[0] || 'Lainnya');
-      form.append('ingredients', JSON.stringify(formData.ingredients.filter(ing => ing.trim() !== '')));
-      form.append('instructions', formData.steps.filter(step => step.trim() !== '').join('\n'));
+      // 1. Konversi File ke Base64 (jika ada gambar)
+      let imageBase64 = '';
       if (formData.image && formData.image instanceof File) {
-        form.append('image', formData.image, formData.image.name);
+        imageBase64 = await convertToBase64(formData.image);
       }
+      
+      // 2. Buat resep baru sesuai struktur resep.js
+      const newRecipe = {
+        id: Date.now(), // ID unik
+        name: formData.title,
+        categories: formData.categories,
+        image: imageBase64 || '', // Simpan sebagai base64
+        rating: 0, // Default rating 0
+        description: formData.description,
+        bahan: formData.ingredients
+          .filter(ing => ing.trim() !== '')
+          .map(ing => `- ${ing}`)
+          .join('\n'),
+        langkah: formData.steps
+          .filter(step => step.trim() !== '')
+          .map((step, index) => `${index + 1}. ${step}`)
+          .join('\n'),
+        createdAt: new Date().toISOString()
+      };
+
+      // 3. Send to backend (requires authentication). Backend expects fields:
+      // title, description, category, ingredients, instructions, image
+      // Use the first selected category as `category` (backend expects single category)
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        category: formData.categories[0] || 'Lainnya',
+        ingredients: formData.ingredients.filter(ing => ing.trim() !== ''),
+        instructions: formData.steps.filter(step => step.trim() !== '').join('\n'),
+        image: imageBase64 || '',
+      };
+
+      // NOTE: Server accepts public recipe creation. We allow creating without login.
 
       let createdRecipe = null;
       try {
-        createdRecipe = await recipeService.createRecipeForm(form);
+        // Debug: log payload sent to API
+        console.debug('Creating recipe payload:', payload);
+        createdRecipe = await recipeService.createRecipe(payload);
       } catch (apiError) {
-        console.error('API createRecipe (form) error:', apiError);
+        // If create fails despite having token, show clear error and do NOT silently save locally
+        console.error('API createRecipe error:', apiError);
         const msg = apiError?.message || 'Gagal menyimpan resep ke server.';
         alert(`Gagal menyimpan ke server: ${msg}`);
         setLoading(false);
