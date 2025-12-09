@@ -35,9 +35,24 @@ const DetailResep = () => {
                                                                 } else {
                                                                     setIsUserRecipe(false);
                                                                 }
-                                        // also try to set favorite status from localStorage if exists
-                                        const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
-                                        setIsFavorite(storedFav);
+                                        // Determine favorite status: prefer server when user logged in
+                                        try {
+                                            const userObj = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+                                            if (userObj) {
+                                                // ask server if this recipe is favorited by current user
+                                                const fav = await recipeService.isFavorite(id);
+                                                setIsFavorite(!!fav);
+                                                // cache for faster UI
+                                                localStorage.setItem(`recipe-${id}-favorite`, fav ? 'true' : 'false');
+                                            } else {
+                                                const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
+                                                setIsFavorite(storedFav);
+                                            }
+                                        } catch (err) {
+                                            console.warn('Failed to determine favorite from server, falling back to local cache', err?.message || err);
+                                            const storedFav = localStorage.getItem(`recipe-${id}-favorite`) === 'true';
+                                            setIsFavorite(storedFav);
+                                        }
 
                                         // Fetch ratings/average from server
                                         try {
