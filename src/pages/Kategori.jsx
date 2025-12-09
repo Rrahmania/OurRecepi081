@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { initialRecipes, categories } from '../data/resep'; 
-import RecipeCard from '../components/RecipeCard'; // Gunakan RecipeCard yang sudah diperbaiki
+import { initialRecipes, categories } from '../data/resep';
+import RecipeCard from '../components/RecipeCard';
+import { recipeService } from '../services/recipeService';
 import './Kategori.css'; 
 import cari from '../assets/cari.png'; 
 
@@ -12,33 +13,55 @@ const Kategori = () => {
   const [ratingVersion, setRatingVersion] = useState(0);
 
   useEffect(() => {
-    const loadRecipes = () => {
+    const loadRecipes = async () => {
+      // Normalizer used for server and local shapes
+      const normalize = (r) => {
+        const id = r.id || r.serverId || String(r.id) || String(Date.now());
+        const name = r.name || r.title || 'Untitled';
+        const cats = Array.isArray(r.categories)
+          ? r.categories
+          : (r.category ? [r.category] : []);
+        const image = r.image || '';
+        return { ...r, id, name, categories: cats, image };
+      };
+
+      // Start from the built-in initial recipes
+      const normalizedInitial = initialRecipes.map(normalize);
+
+      // Try fetching server recipes first (preferred)
+      let serverRecipes = [];
       try {
-        const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
-
-        // Normalize each recipe so we always have: id, name, categories (array), image, bahan/langkah or ingredients/instructions
-        const normalize = (r) => {
-          const id = r.id;
-          const name = r.name || r.title || 'Untitled';
-          const categories = r.categories && Array.isArray(r.categories)
-            ? r.categories
-            : (r.category ? [r.category] : []);
-          const image = r.image || '';
-          return { ...r, id, name, categories, image };
-        };
-
-        const normalizedInitial = initialRecipes.map(normalize);
-        const normalizedSaved = savedRecipes.map(normalize);
-
-        setAllRecipes([...normalizedInitial, ...normalizedSaved]);
-      } catch (error) {
-        console.error('Error loading recipes:', error);
-        setAllRecipes(initialRecipes.map(r => ({
-          ...r,
-          name: r.name || r.title || 'Untitled',
-          categories: r.categories || (r.category ? [r.category] : [])
-        })));
+        const sr = await recipeService.getAllRecipes();
+        if (Array.isArray(sr)) {
+          serverRecipes = sr.map(normalize);
+        } else if (sr && Array.isArray(sr.recipes)) {
+          serverRecipes = sr.recipes.map(normalize);
+        }
+      } catch (err) {
+        // If fetch fails, we will fallback to localStorage below
+        console.warn('Could not fetch recipes from server:', err?.message || err);
+        serverRecipes = [];
       }
+
+      // Load saved local recipes
+      let savedRecipes = [];
+      try {
+        savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+      } catch (e) {
+        savedRecipes = [];
+      }
+      const normalizedSaved = savedRecipes.map(normalize);
+
+      // Merge: priority -> initial < server < saved-local (but do not overwrite server with local)
+      const map = new Map();
+      normalizedInitial.forEach(r => map.set(String(r.id), r));
+      serverRecipes.forEach(r => map.set(String(r.id), r));
+      // Only add saved-local recipes if id not present (avoid duplicates)
+      normalizedSaved.forEach(r => {
+        if (!map.has(String(r.id))) map.set(String(r.id), r);
+      });
+
+      setAllRecipes(Array.from(map.values()));
     };
 
     loadRecipes();
