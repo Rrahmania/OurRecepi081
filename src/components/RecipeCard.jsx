@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Tambahkan useNavigate
+import { useNavigate } from 'react-router-dom';
 import { calculateAverageRating } from '../utils/ratingUtils';
 import { recipeService } from '../services/recipeService';
 import { isUserRecipe, deleteRecipe } from '../utils/recipeUtils';
-import './Recipecard.css';
+import './RecipeCard.css';
 
 const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
+  // Support both legacy local recipe shape (name, categories, bahan, langkah)
+  // and backend recipe shape (title, category, ingredients, instructions)
   const id = recipe.id;
   const name = recipe.name || recipe.title || 'Untitled';
   const categories = recipe.categories || (recipe.category ? [recipe.category] : []);
@@ -58,19 +60,38 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
     e.stopPropagation();
     
     if (window.confirm(`Apakah Anda yakin ingin menghapus resep "${name}"?`)) {
-      const result = deleteRecipe(id);
-      if (result.success) {
-        alert(result.message);
-        // Panggil callback jika ada
-        if (onDelete) {
-          onDelete(id);
+      (async () => {
+        // If id looks like a server UUID and user is logged in, try server delete first
+        const isUuidV4 = (str) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
+        const token = localStorage.getItem('token');
+
+        if (isUuidV4(id) && token) {
+          try {
+            await recipeService.deleteRecipe(id);
+            alert('Resep berhasil dihapus dari server');
+            // Remove any local copy too
+            deleteRecipe(id);
+            if (onDelete) onDelete(id);
+            window.dispatchEvent(new Event('storage'));
+            window.dispatchEvent(new Event('ratingUpdated'));
+            return;
+          } catch (err) {
+            console.error('Server delete failed, falling back to local delete:', err);
+            alert('Gagal menghapus dari server, akan mencoba menghapus lokal saja');
+            // continue to local delete
+          }
         }
-        // Trigger event untuk update UI
-        window.dispatchEvent(new Event('storage'));
-        window.dispatchEvent(new Event('ratingUpdated'));
-      } else {
-        alert(result.message);
-      }
+
+        const result = deleteRecipe(id);
+        if (result.success) {
+          alert(result.message);
+          if (onDelete) onDelete(id);
+          window.dispatchEvent(new Event('storage'));
+          window.dispatchEvent(new Event('ratingUpdated'));
+        } else {
+          alert(result.message);
+        }
+      })();
     }
   };
 
@@ -157,4 +178,3 @@ const RecipeCard = ({ recipe, showDelete = false, onDelete }) => {
 };
 
 export default RecipeCard;
-
