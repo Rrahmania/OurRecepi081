@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { initialRecipes } from '../data/resep';
-import { getRecipeRating } from '../utils/ratingUtils';
+import { getRecipeRating, saveRecipeRating } from '../utils/ratingUtils';
 import { recipeService } from '../services/recipeService';
 import './DetailResep.css';
 
@@ -133,32 +133,47 @@ const DetailResep = () => {
             navigate('/login');
             return;
         }
-                // Send rating to server (upsert)
-                (async () => {
-                    try {
-                        const payload = { recipeId: id, score: rate, comment: '' };
-                        await recipeService.upsertRating(payload);
-                        // refresh averages
-                        const rdata = await recipeService.getRatings(id);
-                        if (rdata) {
-                            setAverageRating(rdata.average || 0);
-                            setRatingCount(rdata.count || 0);
-                            // find user's rating
-                            const userObj = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-                            if (userObj && Array.isArray(rdata.ratings)) {
-                                const my = rdata.ratings.find(rt => rt.user && String(rt.user.id) === String(userObj.id));
-                                if (my) setUserRating(my.score);
-                            } else {
-                                setUserRating(rate);
-                            }
-                        }
-                        // Notify other components
-                        window.dispatchEvent(new CustomEvent('ratingUpdated', { detail: { recipeId: id, average: rdata?.average, count: rdata?.count } }));
-                    } catch (err) {
-                        console.error('Error submitting rating:', err);
-                        alert('Gagal mengirim rating. Silakan coba lagi.');
+
+        // If recipe id is not a server UUID (e.g. local numeric id), store locally instead of calling server
+        const isUuidV4 = (str) => {
+          return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
+        };
+
+        if (!isUuidV4(id)) {
+          // Fallback to local storage for legacy/local recipes
+          saveRecipeRating(id, rate);
+          setUserRating(rate);
+          window.dispatchEvent(new Event('ratingUpdated'));
+          return;
+        }
+
+        // Send rating to server (upsert)
+        (async () => {
+            try {
+                const payload = { recipeId: id, score: rate, comment: '' };
+                await recipeService.upsertRating(payload);
+                // refresh averages
+                const rdata = await recipeService.getRatings(id);
+                if (rdata) {
+                    setAverageRating(rdata.average || 0);
+                    setRatingCount(rdata.count || 0);
+                    // find user's rating
+                    const userObj = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+                    if (userObj && Array.isArray(rdata.ratings)) {
+                        const my = rdata.ratings.find(rt => rt.user && String(rt.user.id) === String(userObj.id));
+                        if (my) setUserRating(my.score);
+                    } else {
+                        setUserRating(rate);
                     }
-                })();
+                }
+                // Notify other components
+                window.dispatchEvent(new CustomEvent('ratingUpdated', { detail: { recipeId: id, average: rdata?.average, count: rdata?.count } }));
+            } catch (err) {
+                // Log extra info to help debugging 500 errors
+                console.error('Error submitting rating:', err, { recipeId: id, score: rate });
+                alert('Gagal mengirim rating. Silakan coba lagi.');
+            }
+        })();
     };
 
     const handleDeleteRecipe = () => {
